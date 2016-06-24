@@ -1,4 +1,4 @@
-# PSE2016-Cprog
+# C Programming Assignment
 Singapore Polytechnic ST2512: Programming in Security - C Programming Assignment
 
 To use GitHub in Ubuntu to push and pull changes:
