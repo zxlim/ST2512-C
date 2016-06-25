@@ -49,6 +49,7 @@ void showhelpmenu() {
 void playgame() {
 	int round = 1;
 	int player_scores[2]= {0,0};
+	char * quitGame;
 	char pname[2][MAXNAME_LEN];
 	char curword[MAXWORD_LEN];
 	char nextword[MAXWORD_LEN];
@@ -68,7 +69,12 @@ void playgame() {
 		printf("%s , please enter the next word (or 'h' for help ,  'q' to quit)=>",pname[(round+1)%2]); 
 		scanf(" %s", nextword); 
 		if (strcmp(nextword,"q")==0) {
-			break;
+			printf("Are you sure you want to quit the game? (Y/n):");
+			scanf(" %s", quitGame);
+			if (quitGame == "Y") {
+				printf("\nQuitting game...\n");
+				break;
+			}
 		}
 		if (strcmp(nextword,"h")==0) {
 			showhelpmenu();
