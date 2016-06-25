@@ -67,4 +67,4 @@ cc -o ../Compiled/game game.c
 ```
 
 
-The folder "Skeleton" contains the original files provided in Blackboard.
+The folder "Original" contains the original files provided in Blackboard.
