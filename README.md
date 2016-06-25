@@ -57,7 +57,7 @@ git push
 
 
 ##Important Note
-If you wish to compile and test the source code (game.c), please do so in the folder "CompiledTestProgram)". Use the following command to compile:
+If you wish to compile and test the source code (game.c), please do so in the folder "CompiledTestProgram". Use the following command to compile:
 ```
 cc -o CompiledTestProgram/game game.c
 ```
