@@ -1,5 +1,6 @@
-#C Programming Assignment
-Singapore Polytechnic ST2512: Programming in Security - C Programming Assignment
+#ST2512: Programming in Security - C Programming Assignment
+#####NOTE: The files to work on is inside the folder "Source Code".
+
 
 ##Basics on how to use GitHub
 [Click here](https://www.youtube.com/watch?v=0fKg7e37bQE)
@@ -57,9 +58,9 @@ git push
 
 
 ##Important Note
-If you wish to compile and test the source code (game.c), please do so in the folder "CompiledTestProgram". Use the following command to compile:
+If you wish to compile and test the source code (game.c), please do so in the folder "Compiled" under the folder "PSE2016-Cprog". Use the following command to compile:
 ```
-cc -o CompiledTestProgram/game game.c
+cc -o ../Compiled/game game.c
 ```
 
 
