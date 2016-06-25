@@ -9,7 +9,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include "util.c"
+#include "util.h"
 #define MAXNAME_LEN 35
 dict * dictptr;
 
