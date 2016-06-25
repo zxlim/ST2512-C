@@ -22,12 +22,15 @@ cd ~/github
 git clone https://github.com/zxlim/PSE2016-Cprog.git
 ```
 
-
 ####The commands below will only work if you are in the repository folder. Do this then proceed on:
 ```
 cd ~/github/PSE2016-Cprog
 ```
 
+#####To check repository status:
+```
+git status
+```
 
 #####To pull changes from repository (Get latest files):
 ```
