@@ -23,7 +23,7 @@ void showhelpmenu() {
 	char dumdum[80];
 	printf("\n\nWelcome to the help menu\n\n");
 	printf("\n\nThis is a two players game.\n\n");
-	printf("  The game begins by showing the players a  randomly picked word\n");
+	printf("  The game begins by showing the players a randomly picked word\n");
 	printf("  The two players will take turns to enter a new word to replace the current word according to the game rules.\n");
 	printf("  Repeat the above process to earn scores from the game.\n");
 	printf("  The game will be terminated when one of the players has chosen to quit or entered an unacceptable word\n");
