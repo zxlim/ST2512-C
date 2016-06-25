@@ -64,7 +64,7 @@ git push
 If you wish to compile and test the source code (game.c), please do so in the folder "Compiled" under the folder "PSE2016-Cprog". Use the following command to compile (Replace x with version number, starting from 01):
 ```
 cd ~/github/PSE2016-Cprog/Source\ Code/
-cc -o ../Compiled/game_x game.c
+cc game.c util.c -o ../Compiled/game_x
 ```
 
 
