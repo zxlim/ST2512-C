@@ -11,13 +11,15 @@
 #include <time.h>
 #include "util.h"
 #define MAXNAME_LEN 35
+
 dict * dictptr;
 
 char * prompt_name(char * prompt_msg,char * newname){
 	printf("%s",prompt_msg);
-	scanf(" %s",newname);
- 	return newname;
+	scanf("%s",newname);
+	return newname;
 }
+
 void showhelpmenu() {
 	char dummy;
 	char dumdum[80];
@@ -34,7 +36,7 @@ void showhelpmenu() {
 	printf("  .The new word must begin with the last letter of the current word\n");
 	printf("  .It cannot be ended with -ing-. \n");
 	printf("\nScoring Rules:\n\n");
-    printf("  Each letter in the new word earns points based on the following point values:\n");
+	printf("  Each letter in the new word earns points based on the following point values:\n");
 	printf("  \n"); 
 	printf("  (1 point)-a, e, i, o, u, l, n, s, t, r.\n");
 	printf("  (2 points)-d, g.\n");
@@ -43,9 +45,10 @@ void showhelpmenu() {
 	printf("  (5 points)-k.\n");
 	printf("  (8 points)- j, x.\n");
 	printf("  (10 points)-q, z.\n");
-	printf("\nPress <Enter Key> to exit help\n");
+	printf("\nPress Enter to exit this help menu.\n");
 	scanf("%c%c",&dummy,&dummy);
 }
+
 void playgame() {
 	int round = 1;
 	int player_scores[2]= {0,0};
@@ -53,43 +56,103 @@ void playgame() {
 	char curword[MAXWORD_LEN];
 	char nextword[MAXWORD_LEN];
 
-	printf("+-----------------------------+\n");
-	printf("|Welcome to ST2512 playground!|\n");
-	printf("+-----------------------------+\n");
-	strcpy(pname[0],prompt_name("Player1 Name Please=>",pname[0]));
-	strcpy(pname[1],prompt_name("Player2 Name Please=>",pname[1]));
-    strcpy(curword, get_random_word(dictptr));
-		
-	for(;;) {
-		printf("\n\nround %4d: %s scores : %3d %s scores : %3d\n",round, pname[0],player_scores[0],pname[1],player_scores[1]); 
+	strcpy(curword, get_random_word(dictptr));
+	//wordNode* wordList = get_new_node(curword);
 
-		printf("current word is %s. \n\n",curword); 
+	printf("Choose your names (Maximum 35 letters)\n");
+	strcpy(pname[0],prompt_name("Name of Player 1: ",pname[0]));
+	strcpy(pname[1],prompt_name("Name of Player 2: ",pname[1]));
 
-		printf("%s , please enter the next word (or 'h' for help ,  'q' to quit)=>",pname[(round+1)%2]); 
-		scanf(" %s", nextword); 
-		if (strcmp(nextword,"q")==0) {
-			break;
+	for (;;) {
+		printf("\n\nRound %4d:\n%s's Score:\t%3d\n%s's Score:\t%3d\n", round, pname[0],player_scores[0],pname[1],player_scores[1]); 
+
+
+		printf("The current word is:\t%s\n\n", curword); 
+
+		printf("(Enter 'q' to quit the game or 'h' for the help menu)\n%s, enter the next word: ", pname[(round+1)%2]); 
+		scanf("%s", nextword);
+
+		if (strcmp(nextword,"q") == 0) {
+			char confirmQuit[1];
+			printf("\nAre you sure you want to quit the game?\n50 points will be deducted! (y/n): ");
+			scanf("%s", confirmQuit);
+			if (strcmp(confirmQuit,"y") == 0) {
+				player_scores[(round+1) % 2] -= 50;
+				printf("\n%s decided to quit the game.", pname[(round+1) % 2]);
+				//freeNodesMem(wordList);
+				break;
+			}
+			continue;
 		}
-		if (strcmp(nextword,"h")==0) {
+
+		if (strcmp(nextword,"h") == 0) {
 			showhelpmenu();
 			continue;
 		}
-		/* fill in your code to complete the program */
 
-   		/*											 */
-	} /* end for loop */
-	printf("\n\nFinal score at round %4d:\n",round);
-	printf("%s scores : %3d %s scores : %3d\n\n",pname[0],player_scores[0],pname[1],player_scores[1]); 
+		// Code below this comment line to complete the program
+
+		/* Compare last letter of current word and first letter of next word (STILL FIGURING OUT HOW -zx)
+		char lastchar[1];
+		char firstchar[1];
+
+		lastchar[0] = curword[strlen(curword)-1];
+		printf("\n%s\n", lastchar); //DEBUG
+		firstchar[0] = nextword[0];
+		printf("\n%s\n", firstchar); //DEBUG
+
+		if (strcmp(lastchar,firstchar) == 0) {
+			//add_node_to_list(wordList, get_new_node(nextword));
+			continue;
+		} else {
+			printf("Oops, %s entered an invalid word!", pname[(round+1) % 2]);
+			//freeNodesMem(wordList);
+			break;
+		}*/
+
+	} // End of For Loop
+	
+	printf("\n\n\nFinal score at round %4d:\n",round);
+	printf("%s's Score:\t%3d\n%s's Score:\t%3d\n\n",pname[0],player_scores[0],pname[1],player_scores[1]);
+
+	if (player_scores[0] > player_scores[1]) {
+		printf("%s wins %s with %3d point difference! Congratulations!\n", pname[0], pname[1], (player_scores[0]-player_scores[1]));
+	} else {
+		printf("%s wins %s with %3d point difference! Congratulations!\n", pname[1], pname[0], (player_scores[1]-player_scores[0]));
+	}
+
 }
 
 int main() {
-	int i = 0;
 
-  	srand(time(NULL));  /* initializing randomizer */
+	char again[1];
 
-	dictptr=get_new_dict();
-	load_words_to_dict(dictptr, "wordlist.txt");
-	playgame();	
-    /* free all dynamically allocated memories */	
-	free_dict_mem(dictptr) ; 
-}
+	printf("\n|====================================|\n");
+	printf("|  Welcome to the ChainyWords Game!  |\n");
+	printf("|====================================|\n");
+
+	// Loops the game until the player wishes to stop playing
+	for (;;) {
+		int i = 0;
+
+		printf("\nLoading game...\n\n\n");
+
+  		srand(time(NULL));  // Initialize randomizer
+  		dictptr=get_new_dict();
+  		load_words_to_dict(dictptr, "wordlist.txt");
+
+  		playgame();
+
+  		// Free all dynamically allocated memory
+  		free_dict_mem(dictptr);
+
+  		printf("Do you wish to play again? (y/n): ");
+  		scanf("%s", again);
+
+  		if (strcmp(again,"n") == 0) {
+  			printf("\nThanks for playing ChainyWords!\n\n");
+  			printf("Exiting game...\n\n");
+  			break;
+  		}
+  	}
+  }
