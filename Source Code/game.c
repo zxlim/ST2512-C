@@ -75,6 +75,7 @@ void playgame() {
 				printf("\nQuitting game...\n");
 				break;
 			}
+			continue;
 		}
 		if (strcmp(nextword,"h")==0) {
 			showhelpmenu();
