@@ -4,30 +4,13 @@
 ** Lim Zhao Xiang (P1529559), DISM/FT/2A/01
 ** Gerald Peh Wei Xiang (P1445972), DISM/FT/2A/01
 */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
 #include "util.h"
-#define MAXWORD_LEN  35
-#define MINWORD_LEN  6
-typedef struct node{
-	char word[MAXWORD_LEN] ; 
-	struct node *  next;
-} wordNode;
-typedef wordNode * dict[26];  // an array of wordNode pointers (26 elements for 'a' to 'z'
-
-/* util functions prototypes */
-dict * get_new_dict();
-void load_words_to_dict(dict * thisdict, char * filename);
-void freeNodesMem(wordNode * onelist_ptr);
-void free_dict_mem(dict * thisdict);
-wordNode * get_new_node(char * new_word);
-wordNode * add_node_to_list(wordNode * thisList, wordNode * thisNode);
-void add_node_to_dict(dict * thisdict,wordNode * thisnode);
-char * get_random_word(dict * this_dict);
-char * get_nth_word_from_list(wordNode * thisList, int nth);
-int get_list_size(wordNode * thisList);
+#define MAXNAME_LEN    35
 dict * dictptr;
 
 char * prompt_name(char * prompt_msg,char * newname){
@@ -110,3 +93,4 @@ int main() {
     /* free all dynamically allocated memories */	
 	free_dict_mem(dictptr) ; 
 }
+
