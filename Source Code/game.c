@@ -23,21 +23,22 @@ char * prompt_name(char * prompt_msg,char * newname){
 
 void showhelpmenu() {
 	char dummy;
-	char dumdum[80];
+	system("clear");
 	printf("\n |====================================|\n");
 	printf(" |   The ChainyWords Game Help Menu   |\n");
 	printf(" |====================================|\n");
-	printf("\n\n This is a two players game.\n\n");
-	printf("   The game begins by showing the players a randomly picked word.\n");
-	printf("   The two players will take turns to enter a new word to replace the current word according to the game rules stated here.\n");
-	printf("   Repeat the above process to increase your game score.\n");
-	printf("   The game will be terminated when one of the players has chosen to quit or entered an unaccepted word.\n");
+	printf("\n\n This is a two-player game.\n\n");
+	printf(" The game begins by showing the players a randomly picked word.\n\n");
+	printf(" The two players will take turns to enter a new word to replace the\n current word according to the game rules stated here.\n\n");
+	printf(" Repeat the above process to increase your game score.\n\n");
+	printf(" The game will be terminated when one of the players has chosen to\n quit or entered an unaccepted word.\n\n");
 	printf("\n\n Acceptance rules for a new word:\n\n");
 	printf("   - The minimum length of the word is 6 letters.\n");
+	printf("   - The maximum length of the word is 35 letters.\n");
 	printf("   - It must be listed in the game's internal dictionary.\n");
 	printf("   - It has not been entered during the current game session.\n");
 	printf("   - The new word must begin with the last letter of the current word.\n");
-	printf("   - It cannot end with -ing.\n");
+	printf("   - It cannot end with \"ing\".\n");
 	printf("\n\n Scoring Rules:\n\n");
 	printf("   Each letter in the new word earns you scores based on the following:\n");
 	printf("   \n"); 
@@ -88,12 +89,12 @@ void playgame() {
 
 		printf(" The current word is:\t%s\n\n", curword);
 
-		printf(" (Enter 'q' to quit the game or 'h' for the help menu)\n%s, enter the next word: ", pname[(round+1)%2]); 
+		printf(" (Enter 'q' to quit the game or 'h' for the help menu)\n %s, enter the next word: ", pname[(round+1)%2]); 
 		scanf("%s", nextword);
 
 		if (strcmp(nextword,"q") == 0) {
 			char confirmQuit[1];
-			printf("\n Are you sure you want to quit the game?\n100 points will be deducted! (y/n): ");
+			printf("\n Are you sure you want to quit the game?\n 100 points will be deducted! (y/n): ");
 			scanf("%s%c", confirmQuit, &dummy);
 			if (strcmp(confirmQuit,"y") == 0) {
 				player_scores[(round+1) % 2] -= 100;
@@ -114,7 +115,7 @@ void playgame() {
 		const char notallowed[] = "ing";
 
 		if (strstr(nextword, notallowed) != NULL) {
-			printf("\n Sorry, the word %s ends with -ing, which is not accepted!\n", nextword);
+			printf("\n Sorry, the word \"%s\" ends with -ing, which is not accepted!\n", nextword);
 			printf("\n %s received a penalty of -50 points.", pname[(round+1) % 2]);
 			player_scores[(round+1) % 2] -= 50;
 			break;
@@ -147,7 +148,7 @@ void playgame() {
 
 	freeNodesMem(wordList);
 	printf("\n Final score at round %4d:\n",(round+1)/2);
-	printf(" %s's Score:\t%3d\n%s's Score:\t%3d\n\n",pname[0],player_scores[0],pname[1],player_scores[1]);
+	printf(" %s's Score:\t%3d\n %s's Score:\t%3d\n\n",pname[0],player_scores[0],pname[1],player_scores[1]);
 
 	if (player_scores[0] > player_scores[1]) {
 		printf("\n |====================================|\n");
@@ -171,7 +172,7 @@ void optionone() {
 	for (;;) {
 		int i = 0;
 
-		printf("\n Loading game...\n\n\n");
+		printf("\n             Loading game...\n\n\n");
 
   		srand(time(NULL));  // Initialize randomizer
   		dictptr=get_new_dict();
@@ -198,7 +199,7 @@ void optionone() {
   	printf("\n\n |============================================|\n");
   	printf(" |  Thanks for playing The ChainyWords Game!  |\n");
   	printf(" |============================================|\n");
-  	printf("\n               Exiting game...\n\n");
+  	printf("\n                Exiting game...\n\n");
   	sleep(2);
   	system("clear");
   }
@@ -231,6 +232,7 @@ void optionone() {
   			exitmenu();
   			break;
   		}
+  		system("clear");
   	}
 
   }
