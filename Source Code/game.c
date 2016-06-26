@@ -59,13 +59,15 @@ void showhelpmenu() {
 }
 
 void debugPrintWordList(wordNode* wordList) {
-	while (wordList != 0) {
-		printf("\n [DEBUG] %s", wordList -> word);
-		wordList = wordList -> next;
+	wordNode* list = wordList;
+
+	while (list != 0) {
+		printf("\n [DEBUG] %s", list -> word);
+		list = list -> next;
 	}
 }
 
-int checkWordList(wordNode* wordList, char nextword[]) {
+int checkWordList(wordNode* wordList, char * nextword) {
 	int usedword;
 	wordNode* list = wordList;
 
@@ -80,9 +82,9 @@ int checkWordList(wordNode* wordList, char nextword[]) {
 	return usedword;
 }
 
+
 void playgame() {
 	int round = 1;
-	int validword = 0;
 	int invalidcount;
 	int forcequit = 0;
 	int minwordlen = MINWORD_LEN;
@@ -117,11 +119,10 @@ void playgame() {
 		int usedword = 0;
 		//int dictword = 0;
 
-		debugPrintWordList(wordList);
-		printf("\n [DEBUG] usedword: %d\n", usedword);
+		//debugPrintWordList(wordList);
+		//printf("\n [DEBUG] usedword: %d\n", usedword);
 
 		for (;;) {
-			validword = 0;
 
 			printf("\n |====================================|\n");
 			printf(" |            Round   %4d            |\n", (round+1)/2);
@@ -131,39 +132,6 @@ void playgame() {
 
 			printf("\n The current word is:\t%s\n\n", curword);
 
-		// Code below this comment line to complete the program
-		
-	//	do {
-
-			char wordchar;
-			wordchar = nextword[0];
-
-			if (wordchar == 'a' || wordchar == 'e' || wordchar == 'i' || wordchar == 'o' || wordchar == 'u' || wordchar == 'l' || wordchar == 'n' || wordchar == 's' || wordchar == 't' || wordchar == 'r'){
-				printf("Letter \"%c\" was one point!\n", wordchar);
-			} 
-			else if (wordchar == 'd' || wordchar == 'g') {
-				printf("Letter \"%c\" was two points!\n", wordchar);
-			}
-			else if (wordchar == 'b' || wordchar == 'c' || wordchar == 'm' || wordchar == 'p' ) {
-				printf("Letter \"%c\" was three points!\n", wordchar);
-			}
-			else if (wordchar == 'f' || wordchar == 'h' || wordchar == 'v' || wordchar == 'w' || wordchar == 'y') {
-				printf("Letter \"%c\" was four points!\n", wordchar);
-			}
-			else if (wordchar == 'k') {
-				printf("Letter \"%c\" was five points!\n", wordchar);
-			}
-			else if (wordchar == 'j' || wordchar == 'x') {
-				printf("Letter \"%c\" was eight points!\n", wordchar);
-			}
-			else if (wordchar == 'q' || wordchar == 'z') {
-				printf("Letter \"%c\" was TEN points!\n", wordchar);
-			} 
-			else {
-				printf("You did not input an alphabet!");	
-			}
-
-	//	} while ();
 			printf(" (Enter 'q' to quit the game or 'h' for the help menu)\n %s, enter the next word: ", pname[(round+1)%2]); 
 			scanf("%s", nextword);
 
@@ -252,16 +220,47 @@ void playgame() {
 					//printf("\n [DEBUG] %s\n", lastchar);
 					//printf("\n [DEBUG] %s\n", firstchar);
 
-					//This bugger below is still damn buggy, not working at times
 					usedword = checkWordList(wordList, nextword);
 
 					if ((strcmp(lastchar,firstchar) == 0) && (usedword != 1)) {
+
 						add_node_to_list(wordList, get_new_node(nextword));
 						strcpy(curword, nextword);
-						validword = 1;
 						round++;
+
+						//Scoring System
+						//do {
+						char wordchar;
+						wordchar = nextword[0];
+
+						if (wordchar == 'a' || wordchar == 'e' || wordchar == 'i' || wordchar == 'o' || wordchar == 'u' || wordchar == 'l' || wordchar == 'n' || wordchar == 's' || wordchar == 't' || wordchar == 'r'){
+							printf("Letter \"%c\" was one point!\n", wordchar);
+						} 
+						else if (wordchar == 'd' || wordchar == 'g') {
+							printf("Letter \"%c\" was two points!\n", wordchar);
+						}
+						else if (wordchar == 'b' || wordchar == 'c' || wordchar == 'm' || wordchar == 'p' ) {
+							printf("Letter \"%c\" was three points!\n", wordchar);
+						}
+						else if (wordchar == 'f' || wordchar == 'h' || wordchar == 'v' || wordchar == 'w' || wordchar == 'y') {
+							printf("Letter \"%c\" was four points!\n", wordchar);
+						}
+						else if (wordchar == 'k') {
+							printf("Letter \"%c\" was five points!\n", wordchar);
+						}
+						else if (wordchar == 'j' || wordchar == 'x') {
+							printf("Letter \"%c\" was eight points!\n", wordchar);
+						}
+						else if (wordchar == 'q' || wordchar == 'z') {
+							printf("Letter \"%c\" was TEN points!\n", wordchar);
+						} 
+						else {
+							printf("You did not input an alphabet!");	
+						}
+							//} while ();
+
 						system("clear");
-						printf("\n [DEBUG] %d, %d\n", validword, (round+1)/2);
+						//printf("\n [DEBUG] Round %d\n", (round+1)/2);
 						break;
 					} else {
 						system("clear");
@@ -369,7 +368,7 @@ void optionone() {
   		printf("\n |====================================|\n");
   		printf(" |  Welcome to The ChainyWords Game!  |\n");
   		printf(" |====================================|\n");
-
+  		printf(" |          By Gerald & Zhao          |\n");
   		printf("\n               Main Menu\n\n");
   		printf("\n             1. Play game");
   		printf("\n             2. Help menu");
