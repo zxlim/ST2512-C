@@ -98,7 +98,6 @@ void playgame() {
 			if (strcmp(confirmQuit,"y") == 0) {
 				player_scores[(round+1) % 2] -= 100;
 				printf("\n %s decided to quit the game.\n", pname[(round+1) % 2]);
-				freeNodesMem(wordList);
 				break;
 			}
 			continue;
@@ -118,7 +117,6 @@ void playgame() {
 			printf("\n Sorry, the word %s ends with -ing, which is not accepted!\n", nextword);
 			printf("\n %s received a penalty of -50 points.", pname[(round+1) % 2]);
 			player_scores[(round+1) % 2] -= 50;
-			freeNodesMem(wordList);
 			break;
 		}
 
@@ -140,7 +138,6 @@ void playgame() {
 			printf("\n Oops, %s entered an invalid word!", pname[(round+1) % 2]);
 			printf("\n %s received a penalty of -50 points.\n", pname[(round+1) % 2]);
 			player_scores[(round+1) % 2] -= 50;
-			freeNodesMem(wordList);
 			break;
 		}
 	} // End of For Loop
@@ -148,6 +145,7 @@ void playgame() {
 	sleep(3);
 	system("clear");
 
+	freeNodesMem(wordList);
 	printf("\n Final score at round %4d:\n",(round+1)/2);
 	printf(" %s's Score:\t%3d\n%s's Score:\t%3d\n\n",pname[0],player_scores[0],pname[1],player_scores[1]);
 
