@@ -83,7 +83,7 @@ void playgame() {
 	system("clear");
 
 	for (;;round++) {
-		printf("\n\nRound %4d:\n%s's Score:\t%3d\n%s's Score:\t%3d\n", round, pname[0],player_scores[0],pname[1],player_scores[1]); 
+		printf("\n\nRound %4d:\n%s's Score:\t%3d\n%s's Score:\t%3d\n", (round+1)/2, pname[0],player_scores[0],pname[1],player_scores[1]); 
 
 
 		printf("The current word is:\t%s\n\n", curword);
@@ -145,7 +145,7 @@ void playgame() {
 		}
 	} // End of For Loop
 	
-	printf("\n\n\nFinal score at round %4d:\n",round);
+	printf("\n\n\nFinal score at round %4d:\n",(round+1)/2);
 	printf("%s's Score:\t%3d\n%s's Score:\t%3d\n\n",pname[0],player_scores[0],pname[1],player_scores[1]);
 
 	if (player_scores[0] > player_scores[1]) {
