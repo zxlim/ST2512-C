@@ -61,11 +61,12 @@ git push
 
 
 ##Important Note
-If you wish to compile and test the source code (game.c), please do so in the folder "Compiled" under the folder "PSE2016-Cprog". Use the following command to compile (Replace x with version number, starting from 01):
+If you wish to compile and test the source code (game.c), please do so in the folder "Compiled" under the folder "PSE2016-Cprog". Use the following command to compile (Replace x with version number e.g. v1.0, v2.3 etc):
 ```
 cd ~/github/PSE2016-Cprog/Source\ Code/
-cc game.c util.c -o ../Compiled/game_x
+cc -Wall game.c util.c -o ../Compiled/game_x
 ```
+P.S. The flag "-Wall" will prevent compilation of source code if there's any warning or error. It's to play super safe.
 
 
 The folder "Original" contains the original files provided in Blackboard.
