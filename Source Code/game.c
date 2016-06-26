@@ -68,7 +68,7 @@ void playgame() {
 	char nextword[MAXWORD_LEN];
 
 	strcpy(curword, get_random_word(dictptr));
-	//wordNode* wordList = get_new_node(curword);
+	wordNode* wordList = get_new_node(curword);
 
 	printf("\n|====================================|\n");
 	printf("|  Welcome to The ChainyWords Game!  |\n");
@@ -98,7 +98,7 @@ void playgame() {
 			if (strcmp(confirmQuit,"y") == 0) {
 				player_scores[(round+1) % 2] -= 100;
 				printf("\n%s decided to quit the game.", pname[(round+1) % 2]);
-				//freeNodesMem(wordList);
+				freeNodesMem(wordList);
 				break;
 			}
 			continue;
@@ -118,7 +118,7 @@ void playgame() {
 			printf("\nSorry, the word %s ends with -ing, which is not accepted!\n", nextword);
 			player_scores[(round+1) % 2] -= 50;
 			printf("\n%s received a penalty of -50 points", pname[(round+1) % 2]);
-			//freeNodesMem(wordList);
+			freeNodesMem(wordList);
 			break;
 		}
 
@@ -133,13 +133,14 @@ void playgame() {
 		//printf("\n%s\n", firstchar); //DEBUG USE
 
 		if (strcmp(lastchar,firstchar) == 0) {
-			//add_node_to_list(wordList, get_new_node(nextword));
+			add_node_to_list(wordList, get_new_node(nextword));
+			strcpy(curword, nextword);
 			continue;
 		} else {
 			printf("Oops, %s entered an invalid word!", pname[(round+1) % 2]);
 			player_scores[(round+1) % 2] -= 50;
 			printf("\n%s received a penalty of -50 points", pname[(round+1) % 2]);
-			//freeNodesMem(wordList);
+			freeNodesMem(wordList);
 			break;
 		}
 	} // End of For Loop
