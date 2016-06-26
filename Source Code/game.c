@@ -10,6 +10,7 @@
 #include <string.h>
 #include <time.h>
 #include <unistd.h>
+#include <ctype.h>
 #include "util.h"
 #define MAXNAME_LEN 35
 
@@ -38,6 +39,7 @@ void showhelpmenu() {
 	printf("   - It must be listed in the game's internal dictionary.\n");
 	printf("   - It has not been entered during the current game session.\n");
 	printf("   - The new word must begin with the last letter of the current word.\n");
+	printf("   - The word must not contain any uppercase, numbers or special characters.\n");
 	printf("   - It cannot end with 'ing'.\n");
 	printf("\n\n Scoring Rules:\n\n");
 	printf("   Each letter in the new word earns you scores based on the following:\n");
@@ -58,8 +60,8 @@ void showhelpmenu() {
 	system("clear");
 }
 
-void debugPrintWordList(wordNode* wordList) {
-	wordNode* list = wordList;
+void debugPrintLinkedList(wordNode* linkedList) {
+	wordNode* list = linkedList;
 
 	while (list != 0) {
 		printf("\n [DEBUG] %s", list -> word);
@@ -82,10 +84,26 @@ int checkWordList(wordNode* wordList, char * nextword) {
 	return usedword;
 }
 
+int checkUppercase(char nextword[]) {
+	int uppercasepresent = 0;
+	int i;
+
+	for (i = 0; i < nextword[strlen(nextword)]; i++) {
+		if (isupper(nextword[i])) {
+			printf("\n [DEBUG] Uppercase detected.");
+			uppercasepresent = 1;
+			break;
+		} else {
+			printf("\n [DEBUG] No uppercase detected.");
+		}
+	}
+
+	return uppercasepresent;
+}
+
 
 void playgame() {
 	int round = 1;
-	int invalidcount;
 	int forcequit = 0;
 	int minwordlen = MINWORD_LEN;
 	int player_scores[2]= {0,0};
@@ -115,12 +133,13 @@ void playgame() {
 
 	for (;;) {
 
-		invalidcount = 3;
+		int invalidcount = 3;
 		int usedword = 0;
+		int uppercasepresent = 0;
 		//int dictword = 0;
 
-		//debugPrintWordList(wordList);
-		//printf("\n [DEBUG] usedword: %d\n", usedword);
+		debugPrintLinkedList(wordList);
+		printf("\n [DEBUG] usedword: %d\n", usedword);
 
 		for (;;) {
 
@@ -189,7 +208,7 @@ void playgame() {
 
 				lastthreechar[4] = '\0';
 
-				//printf("\n [DEBUG] %s", lastthreechar);
+				printf("\n [DEBUG] %s", lastthreechar);
 
 				if ((strcmp(lastthreechar, notallowed) == 0)) {
 					system("clear");
@@ -217,12 +236,13 @@ void playgame() {
 					sprintf(firstchar, "%c" , nextword[0]);
 					firstchar[1] = '\0';
 
-					//printf("\n [DEBUG] %s\n", lastchar);
-					//printf("\n [DEBUG] %s\n", firstchar);
+					printf("\n [DEBUG] %s\n", lastchar);
+					printf("\n [DEBUG] %s\n", firstchar);
 
+					uppercasepresent = checkUppercase(nextword);
 					usedword = checkWordList(wordList, nextword);
 
-					if ((strcmp(lastchar,firstchar) == 0) && (usedword != 1)) {
+					if ((strcmp(lastchar,firstchar) == 0) && (uppercasepresent != 1) && (usedword != 1)) {
 
 						add_node_to_list(wordList, get_new_node(nextword));
 						strcpy(curword, nextword);
@@ -260,11 +280,20 @@ void playgame() {
 							//} while ();
 
 						system("clear");
-						//printf("\n [DEBUG] Round %d\n", (round+1)/2);
+						printf("\n [DEBUG] Round %d\n", (round+1)/2);
 						break;
 					} else {
 						system("clear");
 						printf("\n Oops, '%s' is an invalid word!", nextword);
+						if (strcmp(lastchar,firstchar) != 0) {
+							printf("\n The last letter of the previous word did not\n match the first letter of the new word.");
+						}
+						if (uppercasepresent == 1) {
+							printf("\n The new word contains uppercase characters.");
+						}
+						if (usedword == 1) {
+							printf("\n The new word has already been used before for\n this game session.");
+						}
 						printf("\n %s received a penalty of -50 points.\n", pname[(round+1) % 2]);
 						player_scores[(round+1) % 2] -= 50;
 
@@ -284,7 +313,7 @@ void playgame() {
 			}
 		} //End of For Loop
 
-		//printf("\n [DEBUG] Out of For loop.\n");
+		printf("\n [DEBUG] Out of For loop.\n");
 
 		if (forcequit == 1) {
 			break;
@@ -292,7 +321,7 @@ void playgame() {
 
 	} // End of For Loop
 
-	sleep(4);
+	sleep(2);
 	system("clear");
 
 	printf("\n Final score at round %4d:\n",(round+1)/2);
@@ -332,6 +361,14 @@ void optionone() {
   		srand(time(NULL));  // Initialize randomizer
   		dictptr=get_new_dict();
   		load_words_to_dict(dictptr, "wordlist.txt");
+
+  		//Linked List debugging
+  		wordNode* debugList = get_new_node("start");
+  		add_node_to_list(debugList, get_new_node("middle"));
+  		add_node_to_list(debugList, get_new_node("end"));
+  		debugPrintLinkedList(debugList);
+  		freeNodesMem(debugList);
+  		printf("\n [DEBUG] If you only see start above, there is a problem\n         with the program's linked lists.\n [DEBUG] Try restarting the program.\n");
 
   		system("clear");
   		playgame();
