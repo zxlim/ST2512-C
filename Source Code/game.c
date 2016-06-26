@@ -184,13 +184,13 @@ void playgame() {
 
 					// Compare last letter of current word and first letter of new word
 					sprintf(lastchar, "%c" , curword[strlen(curword)-1]);
-					lastchar[2] = '\0';
+					lastchar[1] = '\0';
 
 					sprintf(firstchar, "%c" , nextword[0]);
-					firstchar[2] = '\0';
+					firstchar[1] = '\0';
 
-					//printf("\n [DEBUG] %s\n", lastchar);
-					//printf("\n [DEBUG] %s\n", firstchar);
+					printf("\n [DEBUG] %s\n", lastchar);
+					printf("\n [DEBUG] %s\n", firstchar);
 
 					if (strcmp(lastchar,firstchar) == 0) {
 						add_node_to_list(wordList, get_new_node(nextword));
