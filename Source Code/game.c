@@ -38,7 +38,7 @@ void showhelpmenu() {
 	printf("   - It must be listed in the game's internal dictionary.\n");
 	printf("   - It has not been entered during the current game session.\n");
 	printf("   - The new word must begin with the last letter of the current word.\n");
-	printf("   - It cannot end with \"ing\".\n");
+	printf("   - It cannot end with 'ing'.\n");
 	printf("\n\n Scoring Rules:\n\n");
 	printf("   Each letter in the new word earns you scores based on the following:\n");
 	printf("   \n"); 
@@ -115,7 +115,7 @@ void playgame() {
 		const char notallowed[] = "ing";
 
 		if (strstr(nextword, notallowed) != NULL) {
-			printf("\n Sorry, the word \"%s\" ends with -ing, which is not accepted!\n", nextword);
+			printf("\n Sorry, the word \"%s\" ends with 'ing', which is not accepted!\n", nextword);
 			printf("\n %s received a penalty of -50 points.", pname[(round+1) % 2]);
 			player_scores[(round+1) % 2] -= 50;
 			break;
