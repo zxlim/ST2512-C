@@ -58,6 +58,28 @@ void showhelpmenu() {
 	system("clear");
 }
 
+void debugPrintWordList(wordNode* wordList) {
+	while (wordList != 0) {
+		printf("\n [DEBUG] %s", wordList -> word);
+		wordList = wordList -> next;
+	}
+}
+
+int checkWordList(wordNode* wordList, char nextword[]) {
+	int usedword;
+	wordNode* list = wordList;
+
+	while (list != 0) {
+		if (strcmp(list -> word, nextword) == 0) {
+			usedword = 1;
+			break;
+		}
+		list = list -> next;
+	}
+
+	return usedword;
+}
+
 void playgame() {
 	int round = 1;
 	int validword = 0;
@@ -92,6 +114,11 @@ void playgame() {
 	for (;;) {
 
 		invalidcount = 3;
+		int usedword = 0;
+		//int dictword = 0;
+
+		debugPrintWordList(wordList);
+		printf("\n [DEBUG] usedword: %d\n", usedword);
 
 		for (;;) {
 			validword = 0;
@@ -189,16 +216,19 @@ void playgame() {
 					sprintf(firstchar, "%c" , nextword[0]);
 					firstchar[1] = '\0';
 
-					printf("\n [DEBUG] %s\n", lastchar);
-					printf("\n [DEBUG] %s\n", firstchar);
+					//printf("\n [DEBUG] %s\n", lastchar);
+					//printf("\n [DEBUG] %s\n", firstchar);
 
-					if (strcmp(lastchar,firstchar) == 0) {
+					//This bugger below is still damn buggy, not working at times
+					usedword = checkWordList(wordList, nextword);
+
+					if ((strcmp(lastchar,firstchar) == 0) && (usedword != 1)) {
 						add_node_to_list(wordList, get_new_node(nextword));
 						strcpy(curword, nextword);
 						validword = 1;
 						round++;
 						system("clear");
-						//printf("\n [DEBUG] %d, %d\n", validword, (round+1)/2);
+						printf("\n [DEBUG] %d, %d\n", validword, (round+1)/2);
 						break;
 					} else {
 						system("clear");
@@ -264,7 +294,6 @@ void optionone() {
 
 	// Loops the game until the player wishes to stop playing
 	for (;;) {
-		int i = 0;
 
 		printf("\n             Loading game...\n\n\n");
 
