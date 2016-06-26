@@ -131,6 +131,39 @@ void playgame() {
 
 			printf("\n The current word is:\t%s\n\n", curword);
 
+		// Code below this comment line to complete the program
+		
+	//	do {
+
+			char wordchar;
+			wordchar = nextword[0];
+
+			if (wordchar == 'a' || wordchar == 'e' || wordchar == 'i' || wordchar == 'o' || wordchar == 'u' || wordchar == 'l' || wordchar == 'n' || wordchar == 's' || wordchar == 't' || wordchar == 'r'){
+				printf("Letter \"%c\" was one point!\n", wordchar);
+			} 
+			else if (wordchar == 'd' || wordchar == 'g') {
+				printf("Letter \"%c\" was two points!\n", wordchar);
+			}
+			else if (wordchar == 'b' || wordchar == 'c' || wordchar == 'm' || wordchar == 'p' ) {
+				printf("Letter \"%c\" was three points!\n", wordchar);
+			}
+			else if (wordchar == 'f' || wordchar == 'h' || wordchar == 'v' || wordchar == 'w' || wordchar == 'y') {
+				printf("Letter \"%c\" was four points!\n", wordchar);
+			}
+			else if (wordchar == 'k') {
+				printf("Letter \"%c\" was five points!\n", wordchar);
+			}
+			else if (wordchar == 'j' || wordchar == 'x') {
+				printf("Letter \"%c\" was eight points!\n", wordchar);
+			}
+			else if (wordchar == 'q' || wordchar == 'z') {
+				printf("Letter \"%c\" was TEN points!\n", wordchar);
+			} 
+			else {
+				printf("You did not input an alphabet!");	
+			}
+
+	//	} while ();
 			printf(" (Enter 'q' to quit the game or 'h' for the help menu)\n %s, enter the next word: ", pname[(round+1)%2]); 
 			scanf("%s", nextword);
 
