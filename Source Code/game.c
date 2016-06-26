@@ -60,8 +60,14 @@ void showhelpmenu() {
 
 void playgame() {
 	int round = 1;
+	int validword = 0;
+	int invalidcount;
+	int forcequit = 0;
+	int minwordlen = MINWORD_LEN;
 	int player_scores[2]= {0,0};
 	char dummy;
+	char lastthreechar[4];
+	const char notallowed[] = "ing";
 	char lastchar[2];
 	char firstchar[2];
 	char pname[2][MAXNAME_LEN];
@@ -75,78 +81,158 @@ void playgame() {
 	printf(" |  Welcome to The ChainyWords Game!  |\n");
 	printf(" |====================================|\n");
 	printf("\n Choose your names (Maximum 35 letters)\n");
-	strcpy(pname[0],prompt_name(" Name of Player 1: ",pname[0]));
-	strcpy(pname[1],prompt_name("\n Name of Player 2: ",pname[1]));
+	strcpy(pname[0],prompt_name("\n Name of Player 1: ",pname[0]));
+	strcpy(pname[1],prompt_name(" Name of Player 2: ",pname[1]));
 
 	printf("\n Initializing game session...\n");
 
 	sleep(2);
 	system("clear");
 
-	for (;;round++) {
-		printf(" \n\n Round %4d:\n %s's Score:\t%3d\n %s's Score:\t%3d\n", (round+1)/2, pname[0],player_scores[0],pname[1],player_scores[1]); 
+	for (;;) {
+
+		invalidcount = 3;
+
+		for (;;) {
+			validword = 0;
+
+			printf("\n |====================================|\n");
+			printf(" |            Round   %4d            |\n", (round+1)/2);
+			printf(" |====================================|\n");
+			printf("\n %s's Score:\t%3d\n %s's Score:\t%3d\n", pname[0],player_scores[0],pname[1],player_scores[1]); 
 
 
-		printf(" The current word is:\t%s\n\n", curword);
+			printf("\n The current word is:\t%s\n\n", curword);
 
-		printf(" (Enter 'q' to quit the game or 'h' for the help menu)\n %s, enter the next word: ", pname[(round+1)%2]); 
-		scanf("%s", nextword);
+			printf(" (Enter 'q' to quit the game or 'h' for the help menu)\n %s, enter the next word: ", pname[(round+1)%2]); 
+			scanf("%s", nextword);
 
-		if (strcmp(nextword,"q") == 0) {
-			char confirmQuit[1];
-			printf("\n Are you sure you want to quit the game?\n 100 points will be deducted! (y/n): ");
-			scanf("%s%c", confirmQuit, &dummy);
-			if (strcmp(confirmQuit,"y") == 0) {
-				player_scores[(round+1) % 2] -= 100;
-				printf("\n %s decided to quit the game.\n", pname[(round+1) % 2]);
-				break;
+			if (strcmp(nextword,"q") == 0) {
+				char confirmQuit[1];
+				printf("\n Are you sure you want to quit the game?\n 100 points will be deducted! (Y/n): ");
+				scanf("%s%c", confirmQuit, &dummy);
+
+				if (strcmp(confirmQuit,"Y") == 0) {
+					printf("\n %s decided to quit the game.\n", pname[(round+1) % 2]);
+					printf("\n %s received a penalty of -100 points.\n", pname[(round+1) % 2]);
+					player_scores[(round+1) % 2] -= 100;
+					forcequit = 1;
+					break;
+				} else {
+					system("clear");
+					continue;
+				}
 			}
-			continue;
-		}
 
-		if (strcmp(nextword,"h") == 0) {
-			showhelpmenu();
-			continue;
-		}
+			if (strcmp(nextword,"h") == 0) {
+				system("clear");
+				showhelpmenu();
+				continue;
+			}
 
-		// Code below this comment line to complete the program
+			//Check new word length
+			int nextword_length = strlen(nextword);
 
-		//Check for "ing" in new word
-		const char notallowed[] = "ing";
+			if(nextword_length < minwordlen) {   
+				system("clear");
+				printf("\n The word '%s' is too short!", nextword);
+				printf("\n %s received a penalty of -50 points.\n", pname[(round+1) % 2]);
+				player_scores[(round+1) % 2] -= 50;
 
-		if (strstr(nextword, notallowed) != NULL) {
-			printf("\n Sorry, the word \"%s\" ends with 'ing', which is not accepted!\n", nextword);
-			printf("\n %s received a penalty of -50 points.", pname[(round+1) % 2]);
-			player_scores[(round+1) % 2] -= 50;
+				if (invalidcount > 1) {
+					printf("\n %s, you have %d tries left.", pname[(round+1) % 2], invalidcount);
+					invalidcount--;
+				} else if (invalidcount == 1) {
+					printf("\n %s, you have 1 try left.", pname[(round+1) % 2]);
+					invalidcount--;
+				} else {
+					printf("\n\n %s entered 3 invalid words in a row and the game is over!\n", pname[(round+1) % 2]);
+					forcequit = 1;
+					break;
+				}
+			} else {
+
+				//Check new word for "ing"
+				int i = 0;
+
+				for (i = 0; i < 3; i++) {
+					lastthreechar[i] = nextword[strlen(nextword) - (3 - i)];
+				}
+
+				lastthreechar[4] = '\0';
+
+				//printf("\n [DEBUG] %s", lastthreechar);
+
+				if ((strcmp(lastthreechar, notallowed) == 0)) {
+					system("clear");
+					printf("\n Sorry, the word '%s' ends with 'ing', which is not accepted!", nextword);
+					printf("\n %s received a penalty of -50 points.\n", pname[(round+1) % 2]);
+					player_scores[(round+1) % 2] -= 50;
+
+					if (invalidcount > 1) {
+						printf("\n %s, you have %d tries left.\n", pname[(round+1) % 2], invalidcount);
+						invalidcount--;
+					} else if (invalidcount == 1) {
+						printf("\n %s, you have 1 try left.\n", pname[(round+1) % 2]);
+						invalidcount--;
+					} else {
+						printf("\n %s entered 3 invalid words in a row and the game is over!\n", pname[(round+1) % 2]);
+						forcequit = 1;
+						break;
+					}
+				} else {
+
+					// Compare last letter of current word and first letter of new word
+					sprintf(lastchar, "%c" , curword[strlen(curword)-1]);
+					lastchar[2] = '\0';
+
+					sprintf(firstchar, "%c" , nextword[0]);
+					firstchar[2] = '\0';
+
+					//printf("\n [DEBUG] %s\n", lastchar);
+					//printf("\n [DEBUG] %s\n", firstchar);
+
+					if (strcmp(lastchar,firstchar) == 0) {
+						add_node_to_list(wordList, get_new_node(nextword));
+						strcpy(curword, nextword);
+						validword = 1;
+						round++;
+						system("clear");
+						//printf("\n [DEBUG] %d, %d\n", validword, (round+1)/2);
+						break;
+					} else {
+						system("clear");
+						printf("\n Oops, '%s' is an invalid word!", nextword);
+						printf("\n %s received a penalty of -50 points.\n", pname[(round+1) % 2]);
+						player_scores[(round+1) % 2] -= 50;
+
+						if (invalidcount > 1) {
+							printf("\n %s, you have %d tries left.\n", pname[(round+1) % 2], invalidcount);
+							invalidcount--;
+						} else if (invalidcount == 1) {
+							printf("\n %s, you have 1 try left.\n", pname[(round+1) % 2]);
+							invalidcount--;
+						} else {
+							printf("\n %s entered 3 invalid words in a row and the game is over!\n", pname[(round+1) % 2]);
+							forcequit = 1;
+							break;
+						}
+					}
+				}
+			}
+		} //End of For Loop
+
+		//printf("\n [DEBUG] Out of For loop.\n");
+
+		if (forcequit == 1) {
 			break;
 		}
 
-		// Compare last letter of current word and first letter of new word
-		sprintf(lastchar, "%c" , curword[strlen(curword)-1]);
-		lastchar[2] = '\0';
-
-		sprintf(firstchar, "%c" , nextword[0]);
-		firstchar[2] = '\0';
-
-		//printf("\n%s\n", lastchar); //DEBUG USE
-		//printf("\n%s\n", firstchar); //DEBUG USE
-
-		if (strcmp(lastchar,firstchar) == 0) {
-			add_node_to_list(wordList, get_new_node(nextword));
-			strcpy(curword, nextword);
-			continue;
-		} else {
-			printf("\n Oops, %s entered an invalid word!", pname[(round+1) % 2]);
-			printf("\n %s received a penalty of -50 points.\n", pname[(round+1) % 2]);
-			player_scores[(round+1) % 2] -= 50;
-			break;
-		}
 	} // End of For Loop
 
-	sleep(3);
+	sleep(4);
 	system("clear");
 
-	freeNodesMem(wordList);
 	printf("\n Final score at round %4d:\n",(round+1)/2);
 	printf(" %s's Score:\t%3d\n %s's Score:\t%3d\n\n",pname[0],player_scores[0],pname[1],player_scores[1]);
 
@@ -155,12 +241,20 @@ void playgame() {
 		printf(" |   We got a ChainyWords winner!!!   |\n");
 		printf(" |====================================|\n");
 		printf("\n %s wins %s with a %3d point difference! Congratulations!\n", pname[0], pname[1], (player_scores[0]-player_scores[1]));
-	} else {
+	} else if (player_scores[1] > player_scores[0]) {
 		printf("\n |====================================|\n");
 		printf(" |   We got a ChainyWords winner!!!   |\n");
 		printf(" |====================================|\n");
 		printf("\n %s wins %s with a %3d point difference! Congratulations!\n", pname[1], pname[0], (player_scores[1]-player_scores[0]));
+	} else {
+		printf("\n |====================================|\n");
+		printf(" |     Two ChainyWords winners!!      |\n");
+		printf(" |====================================|\n");
+		printf("\n Woah! Both %s and %s have the same score! It's a tie!\n", pname[0], pname[1]);
 	}
+
+	//Free node memory
+	freeNodesMem(wordList);
 
 }
 
