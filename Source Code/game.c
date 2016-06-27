@@ -73,8 +73,13 @@ void debugPrintLinkedList(wordNode * linkedList) {
 	}
 
 }
+int get_word_element(char nextword[]){
+	
+	int index = nextword[0] - 'a';
 
+	return index;
 
+}
 int scoringSystem(char nextword[]) {
 
 	int nextword_length = strlen(nextword);

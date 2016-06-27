@@ -197,11 +197,4 @@ void free_dict_mem(dict * this_dict) {
 	}
 }
 
-int get_word_element(char nextword[]){
-	
-	int index = nextword[0] - 'a';
-
-	return index;
-
-}
 
