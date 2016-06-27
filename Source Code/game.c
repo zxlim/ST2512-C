@@ -263,7 +263,7 @@ void playgame() {
 			printf("\n The current word is:\t%s\n\n", curword);
 
 			printf(" (Enter 'q' to quit the game or 'h' for the help menu)");
-			printf("\n %s, enter the next word: ", pname[(round+1)%2]);
+			printf("\n %s, enter the next word: \n", pname[(round+1)%2]);
 			scanf("%s%c", nextword, &dummy);
 
 			if (strcmp(nextword,"q") == 0) {
