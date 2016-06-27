@@ -18,4 +18,4 @@ void add_node_to_dict(dict * thisdict,wordNode * thisnode);
 char * get_random_word(dict * this_dict);
 char * get_nth_word_from_list(wordNode * thisList, int nth);
 int get_list_size(wordNode * thisList);
-
+int get_word_element(char nextword[]);

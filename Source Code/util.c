@@ -58,7 +58,7 @@ char * get_random_word(dict * this_dict) {
     // assumption , target_list is not  NULL
 	wordcount = get_list_size(target_list);
     if (wordcount == 0) {
-		printf("Invalid dictionary has been used to invoke get_random_word()\n");  
+		printf(" Invalid dictionary has been used to invoke get_random_word()\n");  
 		exit(-1);
 	}	
 	do {
@@ -94,7 +94,7 @@ wordNode * add_node_to_list(wordNode * thisList, wordNode * thisNode){
        1. thisList points to a list of wordNode. 
        2. thisList contains at least one node.
 	   3. The word in thisNode is not yet existing in thisList. 
- 	*/ 
+ 	*/ 	
     // add thisNode to thisList according to the alphabetical order
     wordNode * cur_ptr, * prev_ptr ; // current and previous working pointer
     prev_ptr = NULL;  // initial position.
@@ -195,5 +195,13 @@ void free_dict_mem(dict * this_dict) {
     for (i=0;i<26;i++) {
 		freeNodesMem((* this_dict)[i]); 
 	}
+}
+
+int get_word_element(char nextword[]){
+	
+	int index = nextword[0] - 'a';
+
+	return index;
+
 }
 

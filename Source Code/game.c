@@ -117,7 +117,7 @@ int scoringSystem(char nextword[]) {
 
 	sleep(1);
 
-	printf("\n Total points: %i \n", roundPoints);
+	printf("\n Total points: %d \n", roundPoints);
 	sleep(2);
 
 	return roundPoints;
@@ -214,17 +214,49 @@ int checkWordList(wordNode * wordList, char * nextword) {
 }
 
 
-int checkDictList(char nextword[], dict * dictptr) {
+int checkDictList(char nextword[1]) {
 
+	wordNode * target_list;
 	int nextword_indict_ok = 0;
 	char firstchar[2];
+	char chkword[MAXWORD_LEN];
+	int index = 26;
+	int i = 0;
+	char * wordmatch;
+	int wordcount;
+	target_list = (*dictptr)[index];
 
-	sprintf(firstchar, "%c" , nextword[0]);
+	//Adding the first character of nextword to firstchar
+	sprintf(firstchar, "%c" , nextword[0]); 
 	firstchar[1] = '\0';
 
-	//if(strcmp(nextword, )) {
-	//	nextword_indict_ok = 1;
-	//}
+	printf("\n [DEBUG] firstchar: %s\n", firstchar);
+
+	index = get_word_element(nextword);
+
+	printf("\n [DEBUG] index: %d\n", index);
+
+	wordcount = get_list_size(target_list);
+
+	printf("\n [DEBUG] wordcount: %d\n", wordcount);
+
+	for (i = 0; i < wordcount; i++) {
+
+		printf("This message means we have gotten into the FOR loop.");
+
+		wordmatch = get_nth_word_from_list(target_list, i);
+		
+		printf("\n [DEBUG] %s",wordmatch);
+
+		strcpy(chkword, wordmatch);
+
+		if(strcmp(nextword, chkword) == 0 ) {
+			nextword_indict_ok = 1;
+			break;
+		}
+	}
+
+	printf("This message means we have NOT gotten into the FOR loop.");
 
 	return nextword_indict_ok;
 }
@@ -271,7 +303,7 @@ void playgame() {
 			printf("\n %s's Score:\t%3d\n %s's Score:\t%3d\n", pname[0],player_scores[0],pname[1],player_scores[1]); 
 
 			if (roundScore > 0 && validword == 1 && strcmp(nextword,"h") != 0 && strcmp(nextword,"q") != 0) {
-				printf("\n %s have obtained %i points for the word \"%s\"\n", pname[round%2], roundScore, nextword);
+				printf("\n %s have obtained %d points for the word \"%s\"\n", pname[round%2], roundScore, nextword);
 			}
 
 			printf("\n The current word is:\t%s\n\n", curword);
@@ -307,15 +339,16 @@ void playgame() {
 				showhelpmenu();
 				continue;
 			}
-			
+
 			int nextword_length_ok = checkWordLength(nextword);
 			int uppercase_not_ok = checkUppercase(nextword);
 			int nextword_ing_ok = checkEndingING(nextword);
 			int nextword_firstlast_ok = matchFirstLastChar(curword, nextword);
 			int usedword_not_ok = checkWordList(wordList, nextword);
-			//int nextword_indict_ok = checkDictList();
-			
-			if ((nextword_length_ok == 1) && (uppercase_not_ok == 0) && (nextword_ing_ok == 1) && (nextword_firstlast_ok == 1) && (usedword_not_ok == 0)){
+			int nextword_indict_ok = checkDictList(nextword);
+			printf("%d", nextword_indict_ok);
+
+			if ((nextword_length_ok == 1) && (uppercase_not_ok == 0) && (nextword_ing_ok == 1) && (nextword_firstlast_ok == 1) && (usedword_not_ok == 0) && (nextword_indict_ok == 1)){
 
 				roundScore = scoringSystem(nextword);
 				player_scores[(round+1) % 2] += roundScore;
@@ -323,7 +356,7 @@ void playgame() {
 				add_node_to_list(wordList, get_new_node(nextword));
 
 				strcpy(curword, nextword);
-				
+
 				validword = 1;
 
 				round++;
@@ -354,6 +387,9 @@ void playgame() {
 				if (usedword_not_ok == 1) {
 					printf("\n  -  The new word has already been used before for");
 					printf("\n     this game session.");
+				}
+				if (nextword_indict_ok != 1) {
+					printf("\n  -  The word does not exist in the internal dictionary.");
 				}
 
 				printf("\n\n [!] %s received a penalty of -50 points.", pname[(round+1) % 2]);
