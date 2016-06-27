@@ -81,6 +81,9 @@ int scoringSystem(char nextword[]) {
 	int x = 0;
 	int roundPoints = 0;
 
+	system("clear");
+	printf("\n\n\n\n\n Points distribution for word '%s':\n\n", nextword);
+
 	for (x = 0; x < nextword_length; x++) {
 
 		char wordchar;
@@ -107,10 +110,15 @@ int scoringSystem(char nextword[]) {
 		} else if (wordchar == 'q' || wordchar == 'z') {
 			printf(" Letter \"%c\" was 10 points!\n", wordchar);
 			roundPoints += 10;
-		} else {
-			printf("\n You did not input an alphabet! \"%c\" is not an alphabet!\n\n", wordchar);	
 		}
-	} //End of FOR loop
+	} //End of For loop
+
+	printf("\n\n Calculating score...\n");
+
+	sleep(1);
+
+	printf("\n Total points: %i \n", roundPoints);
+	sleep(2);
 
 	return roundPoints;
 }
@@ -263,13 +271,13 @@ void playgame() {
 			printf("\n %s's Score:\t%3d\n %s's Score:\t%3d\n", pname[0],player_scores[0],pname[1],player_scores[1]); 
 
 			if (roundScore > 0 && validword == 1 && strcmp(nextword,"h") != 0 && strcmp(nextword,"q") != 0) {
-				printf("\n You have obtained %i points for the word \"%s\"\n", roundScore, nextword);
+				printf("\n %s have obtained %i points for the word \"%s\"\n", pname[round%2], roundScore, nextword);
 			}
 
 			printf("\n The current word is:\t%s\n\n", curword);
 
 			printf(" (Enter 'q' to quit the game or 'h' for the help menu)");
-			printf("\n %s, enter the next word: \n", pname[(round+1)%2]);
+			printf("\n %s, enter the next word: ", pname[(round+1)%2]);
 			scanf("%s%c", nextword, &dummy);
 
 			if (strcmp(nextword,"q") == 0) {
