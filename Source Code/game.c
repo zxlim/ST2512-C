@@ -71,43 +71,48 @@ void debugPrintLinkedList(wordNode * linkedList) {
 		printf("\n [DEBUG] %s", list -> word);
 		list = list -> next;
 	}
+
 }
 
 
 int scoringSystem(char nextword[]) {
 
-	int score = 0;
+	int nextword_length = strlen(nextword);
+	int x = 0;
+	int roundPoints = 0;
 
-	do {
+	for (x = 0; x < nextword_length; x++) {
+
 		char wordchar;
-		wordchar = nextword[0];
+		wordchar = nextword[x];
 
 		if (wordchar == 'a' || wordchar == 'e' || wordchar == 'i' || wordchar == 'o' || wordchar == 'u' || wordchar == 'l' || wordchar == 'n' || wordchar == 's' || wordchar == 't' || wordchar == 'r'){
-			printf("Letter \"%c\" was one point!\n", wordchar);
-		} 
-		else if (wordchar == 'd' || wordchar == 'g') {
-			printf("Letter \"%c\" was two points!\n", wordchar);
-		}
-		else if (wordchar == 'b' || wordchar == 'c' || wordchar == 'm' || wordchar == 'p' ) {
-			printf("Letter \"%c\" was three points!\n", wordchar);
-		}
-		else if (wordchar == 'f' || wordchar == 'h' || wordchar == 'v' || wordchar == 'w' || wordchar == 'y') {
-			printf("Letter \"%c\" was four points!\n", wordchar);
-		}
-		else if (wordchar == 'k') {
-			printf("Letter \"%c\" was five points!\n", wordchar);
-		}
-		else if (wordchar == 'j' || wordchar == 'x') {
-			printf("Letter \"%c\" was eight points!\n", wordchar);
-		}
-		else if (wordchar == 'q' || wordchar == 'z') {
-			printf("Letter \"%c\" was TEN points!\n", wordchar);
+				printf(" Letter \"%c\" was 1 point!\n", wordchar);
+				roundPoints += 1;
+		} else if (wordchar == 'd' || wordchar == 'g') {
+				printf(" Letter \"%c\" was 2 points!\n", wordchar);	
+				roundPoints += 2;
+		} else if (wordchar == 'b' || wordchar == 'c' || wordchar == 'm' || wordchar == 'p' ) {
+				printf(" Letter \"%c\" was 3 points!\n", wordchar);
+				roundPoints += 3;
+		} else if (wordchar == 'f' || wordchar == 'h' || wordchar == 'v' || wordchar == 'w' 	|| wordchar == 'y') {
+				printf(" Letter \"%c\" was 4 points!\n", wordchar);
+				roundPoints += 4;
+		} else if (wordchar == 'k') {
+				printf(" Letter \"%c\" was 5 points!\n", wordchar);
+				roundPoints += 5;
+		} else if (wordchar == 'j' || wordchar == 'x') {
+				printf(" Letter \"%c\" was 8 points!\n", wordchar);
+				roundPoints += 8;
+		} else if (wordchar == 'q' || wordchar == 'z') {
+				printf(" Letter \"%c\" was 10 points!\n", wordchar);
+				roundPoints += 10;
 		} else {
-			printf("You did not input an alphabet!");	
+				printf("\n You did not input an alphabet! \"%c\" is not an alphabet!\n\n", wordchar);	
 		}
-	} while (1 == 1);
+	} //End of FOR loop
 
-	return score;
+	return roundPoints;
 }
 
 
@@ -198,6 +203,7 @@ int checkWordList(wordNode * wordList, char * nextword) {
 	return usedword_not_ok;
 }
 
+
 int checkDictList(char nextword[]) {
 
 	int nextword_indict_ok = 0;
@@ -211,6 +217,8 @@ int checkDictList(char nextword[]) {
 
 
 void playgame() {
+	int roundScore;
+	int validword = 0;
 	int round = 1;
 	int forcequit = 0;
 	int player_scores[2]= {0,0};
@@ -248,11 +256,14 @@ void playgame() {
 			printf(" |====================================|\n");
 			printf("\n %s's Score:\t%3d\n %s's Score:\t%3d\n", pname[0],player_scores[0],pname[1],player_scores[1]); 
 
+			if (roundScore > 0 && validword == 1 && strcmp(nextword,"h") != 0 && strcmp(nextword,"q") != 0) {
+				printf("\n You have obtained %i points for the word \"%s\"\n", roundScore, nextword);
+			}
 
 			printf("\n The current word is:\t%s\n\n", curword);
 
 			printf(" (Enter 'q' to quit the game or 'h' for the help menu)");
-			printf("\n %s, enter the next word: ", pname[(round+1)%2]); 
+			printf("\n %s, enter the next word: ", pname[(round+1)%2]);
 			scanf("%s%c", nextword, &dummy);
 
 			if (strcmp(nextword,"q") == 0) {
@@ -282,18 +293,23 @@ void playgame() {
 				showhelpmenu();
 				continue;
 			}
-
+			
 			int nextword_length_ok = checkWordLength(nextword);
 			int uppercase_not_ok = checkUppercase(nextword);
 			int nextword_ing_ok = checkEndingING(nextword);
 			int nextword_firstlast_ok = matchFirstLastChar(curword, nextword);
 			int usedword_not_ok = checkWordList(wordList, nextword);
+			
+			if ((nextword_length_ok == 1) && (uppercase_not_ok == 0) && (nextword_ing_ok == 1) && (nextword_firstlast_ok == 1) && (usedword_not_ok == 0)){
 
-			if ((nextword_length_ok == 1) && (uppercase_not_ok == 0) && (nextword_ing_ok == 1) && (nextword_firstlast_ok == 1) && (usedword_not_ok == 0)) {
+				roundScore = scoringSystem(nextword);
+				player_scores[(round+1) % 2] += roundScore;
 
 				add_node_to_list(wordList, get_new_node(nextword));
 
 				strcpy(curword, nextword);
+				
+				validword = 1;
 
 				round++;
 
@@ -304,6 +320,7 @@ void playgame() {
 			} else {
 
 				system("clear");
+				validword = 0;
 				printf("\n Oops, '%s' is an invalid word!\n", nextword);
 
 				if (nextword_length_ok != 1) {
@@ -450,4 +467,5 @@ int main() {
 		system("clear");
 	}
 
+	return 0;
 }
