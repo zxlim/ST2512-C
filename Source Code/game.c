@@ -87,28 +87,28 @@ int scoringSystem(char nextword[]) {
 		wordchar = nextword[x];
 
 		if (wordchar == 'a' || wordchar == 'e' || wordchar == 'i' || wordchar == 'o' || wordchar == 'u' || wordchar == 'l' || wordchar == 'n' || wordchar == 's' || wordchar == 't' || wordchar == 'r'){
-				printf(" Letter \"%c\" was 1 point!\n", wordchar);
-				roundPoints += 1;
+			printf(" Letter \"%c\" was 1 point!\n", wordchar);
+			roundPoints += 1;
 		} else if (wordchar == 'd' || wordchar == 'g') {
-				printf(" Letter \"%c\" was 2 points!\n", wordchar);	
-				roundPoints += 2;
+			printf(" Letter \"%c\" was 2 points!\n", wordchar);	
+			roundPoints += 2;
 		} else if (wordchar == 'b' || wordchar == 'c' || wordchar == 'm' || wordchar == 'p' ) {
-				printf(" Letter \"%c\" was 3 points!\n", wordchar);
-				roundPoints += 3;
+			printf(" Letter \"%c\" was 3 points!\n", wordchar);
+			roundPoints += 3;
 		} else if (wordchar == 'f' || wordchar == 'h' || wordchar == 'v' || wordchar == 'w' 	|| wordchar == 'y') {
-				printf(" Letter \"%c\" was 4 points!\n", wordchar);
-				roundPoints += 4;
+			printf(" Letter \"%c\" was 4 points!\n", wordchar);
+			roundPoints += 4;
 		} else if (wordchar == 'k') {
-				printf(" Letter \"%c\" was 5 points!\n", wordchar);
-				roundPoints += 5;
+			printf(" Letter \"%c\" was 5 points!\n", wordchar);
+			roundPoints += 5;
 		} else if (wordchar == 'j' || wordchar == 'x') {
-				printf(" Letter \"%c\" was 8 points!\n", wordchar);
-				roundPoints += 8;
+			printf(" Letter \"%c\" was 8 points!\n", wordchar);
+			roundPoints += 8;
 		} else if (wordchar == 'q' || wordchar == 'z') {
-				printf(" Letter \"%c\" was 10 points!\n", wordchar);
-				roundPoints += 10;
+			printf(" Letter \"%c\" was 10 points!\n", wordchar);
+			roundPoints += 10;
 		} else {
-				printf("\n You did not input an alphabet! \"%c\" is not an alphabet!\n\n", wordchar);	
+			printf("\n You did not input an alphabet! \"%c\" is not an alphabet!\n\n", wordchar);	
 		}
 	} //End of FOR loop
 
