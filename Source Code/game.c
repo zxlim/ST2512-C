@@ -149,7 +149,7 @@ int scoringSystem(char nextword[], int totalupperconvert, int converted_lower_ok
 			printf("\n [!] The game has detected uppercase letter(s).");
 			printf("\n\n Luckily for you, the creators are kind\n and have converted it for you.\n");
 			sleep(1);
-			printf("\n But as the saying goes, if you're good at\n something never do it for free. So there goes 5 points.\n");		
+			printf("\n But as the saying goes, if you're good at\n something never do it for free. So there goes 50 points.\n");		
 			sleep(3);
 
 		} else if (totalupperconvert == 2) {
@@ -161,13 +161,13 @@ int scoringSystem(char nextword[], int totalupperconvert, int converted_lower_ok
 		} else if (totalupperconvert == 3) {
 
 			printf("\n [!] Really? Again? That's it!\n");
-			printf("\n Say goodbye to 20 points. That'll teach you a lesson.\n");
+			printf("\n Say goodbye to 200 points. That'll teach you a lesson.\n");
 			sleep(3);
 
 		} else if (totalupperconvert > 3) {
 
 			printf("\n [!] ....");
-			printf("\n We give up, say goodbye to 30 points. ");
+			printf("\n We give up, say goodbye to 300 points. ");
 			sleep(2);
 
 		}
@@ -207,6 +207,7 @@ int scoringSystem(char nextword[], int totalupperconvert, int converted_lower_ok
 	printf("\n\n Calculating score...\n");
 	sleep(2);
 
+
 	printf("\n  Total points: %d \n", roundPoints);
 	sleep(2);
 
@@ -214,16 +215,16 @@ int scoringSystem(char nextword[], int totalupperconvert, int converted_lower_ok
 
 		switch(totalupperconvert) {
 			case 1:
-			roundPoints -= 5;
+			roundPoints -= 50;
 			break;
 			case 2:
-			roundPoints -= 10;
+			roundPoints -= 100;
 			break;
 			case 3:
-			roundPoints -= 20;
+			roundPoints -= 200;
 			break;
 			default:
-			roundPoints -= 30;
+			roundPoints -= 300;
 			break;
 		}
 
@@ -280,6 +281,7 @@ int checkUppercase(char nextword[]) {
 
 	return uppercase_not_ok;
 }
+
 
 int convertUppertoLower(char nextword[]){
 
