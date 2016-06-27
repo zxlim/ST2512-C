@@ -217,13 +217,15 @@ int checkWordList(wordNode * wordList, char * nextword) {
 int checkDictList(char nextword[1]) {
 
 	wordNode * target_list;
+
 	int nextword_indict_ok = 0;
 	char firstchar[2];
-	char chkword[MAXWORD_LEN];
 	int index = 26;
-	int i = 0;
-	char * wordmatch;
-	int wordcount;
+
+	index = get_word_element(nextword);
+
+	printf("\n [DEBUG] index: %d\n", index);
+
 	target_list = (*dictptr)[index];
 
 	//Adding the first character of nextword to firstchar
@@ -232,31 +234,25 @@ int checkDictList(char nextword[1]) {
 
 	printf("\n [DEBUG] firstchar: %s\n", firstchar);
 
-	index = get_word_element(nextword);
+	wordNode * cur_ptr;
 
-	printf("\n [DEBUG] index: %d\n", index);
+	cur_ptr = target_list;
 
-	wordcount = get_list_size(target_list);
-
-	printf("\n [DEBUG] wordcount: %d\n", wordcount);
-
-	for (i = 0; i < wordcount; i++) {
-
-		printf("This message means we have gotten into the FOR loop.");
-
-		wordmatch = get_nth_word_from_list(target_list, i);
-		
-		printf("\n [DEBUG] %s",wordmatch);
-
-		strcpy(chkword, wordmatch);
-
-		if(strcmp(nextword, chkword) == 0 ) {
-			nextword_indict_ok = 1;
+	for(;;) {
+		if (cur_ptr == NULL) {
+			//Word does not exist
+			nextword_indict_ok = 0;
 			break;
 		}
-	}
+		if ( strcmp( cur_ptr->word,nextword ) == 0 ){
+			//Check word from dictionary 
+			//If 0, word is in dictionary
+			nextword_indict_ok = 1; 
+			break;
+		}
 
-	printf("This message means we have NOT gotten into the FOR loop.");
+     	cur_ptr = cur_ptr->next; //Move on the next word
+	}
 
 	return nextword_indict_ok;
 }
@@ -345,9 +341,10 @@ void playgame() {
 			int nextword_ing_ok = checkEndingING(nextword);
 			int nextword_firstlast_ok = matchFirstLastChar(curword, nextword);
 			int usedword_not_ok = checkWordList(wordList, nextword);
-			int nextword_indict_ok = checkDictList(nextword);
-			printf("%d", nextword_indict_ok);
-
+			int nextword_indict_ok;
+			if (uppercase_not_ok != 1){
+				nextword_indict_ok = checkDictList(nextword);
+			}
 			if ((nextword_length_ok == 1) && (uppercase_not_ok == 0) && (nextword_ing_ok == 1) && (nextword_firstlast_ok == 1) && (usedword_not_ok == 0) && (nextword_indict_ok == 1)){
 
 				roundScore = scoringSystem(nextword);
