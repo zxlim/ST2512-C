@@ -191,6 +191,8 @@ int checkWordList(wordNode * wordList, char * nextword) {
 	int usedword_not_ok;
 	wordNode* list = wordList;
 
+
+
 	while (list != 0) {
 		if (strcmp(list -> word, nextword) == 0) {
 			usedword_not_ok = 1;
@@ -204,12 +206,16 @@ int checkWordList(wordNode * wordList, char * nextword) {
 }
 
 
-int checkDictList(char nextword[]) {
+int checkDictList(char nextword[], dict * dictptr) {
 
 	int nextword_indict_ok = 0;
+	char firstchar[2];
 
-	//if (strcmp(nextword, dictptr) == 0) {
-		//nextword_indict_ok = 1;
+	sprintf(firstchar, "%c" , nextword[0]);
+	firstchar[1] = '\0';
+
+	//if(strcmp(nextword, )) {
+	//	nextword_indict_ok = 1;
 	//}
 
 	return nextword_indict_ok;
@@ -299,6 +305,7 @@ void playgame() {
 			int nextword_ing_ok = checkEndingING(nextword);
 			int nextword_firstlast_ok = matchFirstLastChar(curword, nextword);
 			int usedword_not_ok = checkWordList(wordList, nextword);
+			//int nextword_indict_ok = checkDictList();
 			
 			if ((nextword_length_ok == 1) && (uppercase_not_ok == 0) && (nextword_ing_ok == 1) && (nextword_firstlast_ok == 1) && (usedword_not_ok == 0)){
 
