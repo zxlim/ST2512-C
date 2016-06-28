@@ -136,39 +136,47 @@ int get_word_element(char nextword[]){
 int roundOption() {
 
 	int roundAmount;
-
+	int readSucc;
 	for (;;) {
 
 		int roundchoice = 0;
 		int choicecorrect = 0;
 
-		printf("\n            Number of rounds\n");
-		printf("\n             1. 25 rounds");
-		printf("\n             2. 60 rounds");
-		printf("\n             3. Endless");
-		printf("\n\n           Selection (1-3): ");
-		scanf("%d", &roundchoice);
+		printf("\n Number of rounds\n");
+		printf("\n 1. 25 rounds");
+		printf("\n 2. 60 rounds");
+		printf("\n 3. Endless");
+		printf("\n\n Selection (1-3): ");
 
-		switch (roundchoice) {
-			case 1:
-			roundAmount = 26*2;
-			choicecorrect = 1;
-			break;
-			case 2:
-			roundAmount = 61*2;
-			choicecorrect = 1;
-			break;
-			case 3:
-			roundAmount = 0;
-			choicecorrect = 1;
-			break;
-			default:
-			printf("\n    Invalid choice. Please try again.\n");
-		}
+		readSucc = scanf("%d", &roundchoice);
+		printf(" %d",readSucc);
+		//If user input integer, readSucc will be == 1 
+		if (readSucc != 1) { 
+			//Not successful
+			
+		} 	
+			//Successful
+			switch (roundchoice) {
+				case 1:
+				roundAmount = 26*2;
+				choicecorrect = 1;
+				break;
+				case 2:
+				roundAmount = 61*2;
+				choicecorrect = 1;
+				break;
+				case 3:
+				roundAmount = 0;
+				choicecorrect = 1;
+				break;
+				default:
+				printf("\n    Invalid choice. Please try again.\n");
+			}
 
 		if (choicecorrect == 1) {
 			break;
 		}
+		
 	}
 
 	return roundAmount;
@@ -188,6 +196,7 @@ int scoringSystem(char nextword[], int totalupperconvert, int converted_lower_ok
 		if (totalupperconvert == 1) {
 
 			printf("\n [!] The game has detected uppercase letter(s).");
+			sleep(1);
 			printf("\n\n Luckily for you, the creators are kind\n and have converted it for you.\n");
 			sleep(1);
 			printf("\n But as the saying goes, if you're good at\n something never do it for free. So there goes 50 points.\n");		
@@ -448,6 +457,7 @@ int checkDictList(char nextword[1]) {
  	int validword = 0;
  	int round = 1;
  	int totalupperconvert = 0;
+ 	int roundamount = 501;
  	int forcequit = 0;
  	int player_scores[2]= {0,0};
  	char pname[2][MAXNAME_LEN];
@@ -466,7 +476,8 @@ int checkDictList(char nextword[1]) {
  	strcpy(pname[0],prompt_name("\n Name of Player 1: ",pname[0]));
  	strcpy(pname[1],prompt_name(" Name of Player 2: ",pname[1]));
 
- 	int roundamount = roundOption();
+ 	roundamount = roundOption();
+ 	printf("\n %d", roundamount);
 
  	printf("\n Initializing game session...\n");
 
