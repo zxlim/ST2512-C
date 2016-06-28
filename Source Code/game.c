@@ -133,6 +133,47 @@ int get_word_element(char nextword[]){
 	return index;
 }
 
+int roundOption() {
+
+	int roundAmount;
+
+	for (;;) {
+
+		int roundchoice = 0;
+		int choicecorrect = 0;
+
+		printf("\n            Number of rounds\n");
+		printf("\n             1. 25 rounds");
+		printf("\n             2. 60 rounds");
+		printf("\n             3. Endless");
+		printf("\n\n           Selection (1-3): ");
+		scanf("%d", &roundchoice);
+
+		switch (roundchoice) {
+			case 1:
+			roundAmount = 26*2;
+			choicecorrect = 1;
+			break;
+			case 2:
+			roundAmount = 61*2;
+			choicecorrect = 1;
+			break;
+			case 3:
+			roundAmount = 0;
+			choicecorrect = 1;
+			break;
+			default:
+			printf("\n    Invalid choice. Please try again.\n");
+		}
+
+		if (choicecorrect == 1) {
+			break;
+		}
+	}
+
+	return roundAmount;
+}
+
 
 int scoringSystem(char nextword[], int totalupperconvert, int converted_lower_ok) {
 
@@ -425,12 +466,14 @@ int checkDictList(char nextword[1]) {
  	strcpy(pname[0],prompt_name("\n Name of Player 1: ",pname[0]));
  	strcpy(pname[1],prompt_name(" Name of Player 2: ",pname[1]));
 
+ 	int roundamount = roundOption();
+
  	printf("\n Initializing game session...\n");
 
  	sleep(2);
  	system("clear");
 
- 	for (;;) {
+ 	for (;round != roundamount;) {
 
  		int invalidcount = 3;
 
@@ -643,6 +686,7 @@ void exitmenu() {
 int main() {
 
 	int option;
+	int forcequit = 0;
 	system("clear");
 
 	for (;;) {
@@ -657,18 +701,27 @@ int main() {
 		printf("            Selection (1-3): ");
 		scanf("%d", &option);
 
-		if (option == 1) {
+		switch (option) {
+			case 1:
 			optionone();
 			exitmenu();
+			forcequit = 1;
 			break;
-		} else if (option == 2) {
+			case 2:
 			showhelpmenu();
 			continue;
-		} else {
+			case 3:
 			exitmenu();
+			forcequit = 1;
+			break;
+			default:
+			system("clear");
+			printf("\n  Invalid choice. Please try again.\n");
+		}
+
+		if (forcequit == 1) {
 			break;
 		}
-		system("clear");
 	}
 
 	return 0;
