@@ -110,7 +110,8 @@ void showhelpmenu() {
 	printf("       + Third time        (-200 points)\n");
 	printf("       + Subsequent times  (-300 points)\n");
 	printf("\n Press Enter to exit this help menu.\n ");
-	scanf("%c%c", &dummy, &dummy);
+//	scanf("%c%c", &dummy, &dummy);
+	scanf("%c", &dummy);
 	system("clear");
 }
 
@@ -136,7 +137,6 @@ int get_word_element(char nextword[]){
 int roundOption() {
 
 	int roundAmount;
-	int readSucc;
 	for (;;) {
 
 		int roundchoice = 0;
@@ -148,8 +148,8 @@ int roundOption() {
 		printf("\n 3. Endless");
 		printf("\n\n Selection (1-3): ");
 
-		readSucc = scanf("%d", &roundchoice);
-		getchar();
+		scanf("%d", &roundchoice);
+		getchar(); //NOT THE BEST METHOD
 
 		//If user input integer, readSucc will be == 1 
 //		if (readSucc != 1) { 
@@ -157,7 +157,7 @@ int roundOption() {
 //
 //		} 	
 			//Successful
-		
+
 			switch (roundchoice) {
 				case 1:
 				roundAmount = 26*2;
@@ -197,7 +197,7 @@ int scoringSystem(char nextword[], int totalupperconvert, int converted_lower_ok
 	if (converted_lower_ok == 1) {
 		if (totalupperconvert == 1) {
 
-			printf("\n [!] The game has detected uppercase letter(s).");
+			printf("\n [!] The game has detected uppercase letter(s).\n");
 			sleep(1);
 			printf("\n\n Luckily for you, the creators are kind\n and have converted it for you.\n");
 			sleep(1);
@@ -207,18 +207,21 @@ int scoringSystem(char nextword[], int totalupperconvert, int converted_lower_ok
 		} else if (totalupperconvert == 2) {
 
 			printf("\n [!] Once again! You have entered uppercase letter(s).\n");
+			sleep(1);
 			printf("\n We did it for you again but this time it's at double the cost.\n");
 			sleep(3);
 
 		} else if (totalupperconvert == 3) {
 
 			printf("\n [!] Really? Again? That's it!\n");
+			sleep(1);
 			printf("\n Say goodbye to 200 points. That'll teach you a lesson.\n");
 			sleep(3);
 
 		} else if (totalupperconvert > 3) {
 
-			printf("\n [!] ....");
+			printf("\n [!] ....\n");
+			sleep(1);
 			printf("\n We give up, say goodbye to 300 points. ");
 			sleep(2);
 
@@ -280,7 +283,7 @@ int scoringSystem(char nextword[], int totalupperconvert, int converted_lower_ok
 			break;
 		}
 
-		printf("\n Wait! Almost forgot the points you lost.");
+		printf("\n Wait! Almost forgot the points you lost.\n");
 		printf("\n Calculating ACTUAL score...\n");
 		sleep(2);
 		printf("\n Final points: %d \n", roundPoints);
@@ -479,7 +482,6 @@ int checkDictList(char nextword[1]) {
  	strcpy(pname[1],prompt_name(" Name of Player 2: ",pname[1]));
 
  	roundamount = roundOption();
- 	printf("\n %d", roundamount);
 
  	printf("\n Initializing game session...\n");
 
@@ -713,6 +715,7 @@ int main() {
 		printf("\n             3. Exit game\n\n");
 		printf("            Selection (1-3): ");
 		scanf("%d", &option);
+		getchar(); //NOT THE BEST METHOD
 
 		switch (option) {
 			case 1:
@@ -728,8 +731,9 @@ int main() {
 			forcequit = 1;
 			break;
 			default:
+			printf("\n\n\n\n\n  Invalid choice. Please try again.\n");
+			sleep(1);
 			system("clear");
-			printf("\n  Invalid choice. Please try again.\n");
 		}
 
 		if (forcequit == 1) {
