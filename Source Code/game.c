@@ -142,6 +142,11 @@ int roundOption() {
 		int roundchoice = 0;
 		int choicecorrect = 0;
 
+		system("clear");
+		printf("\n |====================================|\n");
+		printf(" |  Welcome to The ChainyWords Game!  |\n");
+		printf(" |====================================|\n");
+		printf("                 2/2					\n");
 		printf("\n Number of rounds\n");
 		printf("\n 1. 25 rounds");
 		printf("\n 2. 60 rounds");
@@ -158,22 +163,25 @@ int roundOption() {
 //		} 	
 			//Successful
 
-			switch (roundchoice) {
-				case 1:
-				roundAmount = 26*2;
-				choicecorrect = 1;
-				break;
-				case 2:
-				roundAmount = 61*2;
-				choicecorrect = 1;
-				break;
-				case 3:
-				roundAmount = 0;
-				choicecorrect = 1;
-				break;
-				default:
-				printf("\n    Invalid choice. Please try again.\n");
-			}
+		switch (roundchoice) {
+			case 1:
+			roundAmount = 26*2;
+			choicecorrect = 1;
+			break;
+			case 2:
+			roundAmount = 61*2;
+			choicecorrect = 1;
+			break;
+			case 3:
+			roundAmount = 0;
+			choicecorrect = 1;
+			break;
+			default:
+			printf("\n    Invalid choice. Please try again.\n");
+			sleep(1);
+			system("clear");
+
+		}
 
 		if (choicecorrect == 1) {
 			break;
@@ -477,6 +485,7 @@ int checkDictList(char nextword[1]) {
  	printf("\n |====================================|\n");
  	printf(" |  Welcome to The ChainyWords Game!  |\n");
  	printf(" |====================================|\n");
+ 	printf("                 1/2					\n");
  	printf("\n Choose your names (Maximum 35 letters)\n");
  	strcpy(pname[0],prompt_name("\n Name of Player 1: ",pname[0]));
  	strcpy(pname[1],prompt_name(" Name of Player 2: ",pname[1]));
@@ -709,6 +718,7 @@ int main() {
 		printf(" |  Welcome to The ChainyWords Game!  |\n");
 		printf(" |====================================|\n");
 		printf(" |          By Gerald & Zhao          |\n");
+		printf("\n           Updates needed:\n 1) Fix error message appearing twice when two\n characters are input into roundOption\n 2) Difficulty level\n 3) A.I. option\n 4)\n");
 		printf("\n               Main Menu\n\n");
 		printf("\n             1. Play game");
 		printf("\n             2. Help menu");
@@ -731,7 +741,7 @@ int main() {
 			forcequit = 1;
 			break;
 			default:
-			printf("\n\n\n\n\n  Invalid choice. Please try again.\n");
+			printf("\n Invalid choice. Please try again.\n");
 			sleep(1);
 			system("clear");
 		}
