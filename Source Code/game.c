@@ -149,13 +149,15 @@ int roundOption() {
 		printf("\n\n Selection (1-3): ");
 
 		readSucc = scanf("%d", &roundchoice);
-		printf(" %d",readSucc);
+		getchar();
+
 		//If user input integer, readSucc will be == 1 
-		if (readSucc != 1) { 
-			//Not successful
-			
-		} 	
+//		if (readSucc != 1) { 
+//			//Not successful
+//
+//		} 	
 			//Successful
+		
 			switch (roundchoice) {
 				case 1:
 				roundAmount = 26*2;
