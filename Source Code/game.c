@@ -498,6 +498,7 @@ int checkDictList(char nextword[1]) {
  	printf("\n |====================================|\n");
  	printf(" |  Welcome to The ChainyWords Game!  |\n");
  	printf(" |====================================|\n");
+ 	printf("                 1/2					\n");
  	printf("\n Choose your names (Maximum 35 letters)\n");
  	strcpy(pname[0],prompt_name("\n Name of Player 1: ",pname[0]));
  	strcpy(pname[1],prompt_name(" Name of Player 2: ",pname[1]));
