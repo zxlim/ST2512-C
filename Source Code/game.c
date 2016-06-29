@@ -218,30 +218,30 @@ int scoringSystem(char nextword[], int totalupperconvert, int converted_lower_ok
 	if (converted_lower_ok == 1) {
 		if (totalupperconvert == 1) {
 
-			printf("\n  [!] The game has detected uppercase letter(s).\n");
+			printf("\n  \xF0\x9F\x98\xB1  The game has detected uppercase letter(s).\n");
 			sleep(2);
-			printf("\n\n  Luckily for you, the creators are kind\n and have converted it for you.\n");
+			printf("\n\n  Luckily for you, the creators are kind\n  and have converted it for you.\n");
 			sleep(2);
-			printf("\n  But as the saying goes, if you're good at\n something never do it for free. So there goes 50 points.\n");		
+			printf("\n  But as the saying goes, if you're good at\n  something never do it for free. So there goes 50 points.\n");		
 			sleep(3);
 
 		} else if (totalupperconvert == 2) {
 
-			printf("\n  [!] Once again! You have entered uppercase letter(s).\n");
+			printf("\n  \xF0\x9F\x98\xB1  Once again! You have entered uppercase letter(s).\n");
 			sleep(2);
 			printf("\n  We did it for you again but this time it's at double the cost.\n");
 			sleep(3);
 
 		} else if (totalupperconvert == 3) {
 
-			printf("\n  [!] Really? Again? That's it!\n");
+			printf("\n  \xF0\x9F\x98\x95  Really? Again? That's it!\n");
 			sleep(2);
 			printf("\n  Say goodbye to 200 points. That'll teach you a lesson.\n");
 			sleep(3);
 
 		} else if (totalupperconvert > 3) {
 
-			printf("\n  [!] ....\n");
+			printf("\n  \xF0\x9F\x98\x94  ....\n");
 			sleep(1);
 			printf("\n  We give up, say goodbye to 300 points. ");
 			sleep(2);
@@ -718,14 +718,14 @@ int main() {
 	char dummy;
 	int option;
 	int forcequit = 0;
-
+	
 	for (;;) {
 
 		do {
 
 			system("clear");
 			printf("\n |====================================|\n");
-			printf(" |  Welcome to The ChainyWords%c%c%c Game! |\n", '\xE2', '\x84', '\xA2');
+			printf(" |  Welcome to The ChainyWords\xE2\x84\xA2 Game! |\n");
 			printf(" |====================================|\n");
 			printf(" |          By Gerald & Zhao          |\n");
 			printf("\n               Main Menu\n\n");
@@ -750,7 +750,7 @@ int main() {
 			forcequit = 1;
 			break;
 			default:
-			printf("\n\n  Invalid choice. Please try again.\n");
+			printf("\n\n  \xE2\x83\xA0 Invalid choice. Please try again.\n");
 			sleep(2);
 		}
 
