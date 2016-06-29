@@ -151,6 +151,7 @@ void exitmenu() {
 }
 
 int roundOption() {
+	//Allows the players to choose how many rounds they want to play
 
 	char dummy;
 	int roundAmount;
@@ -207,6 +208,7 @@ int roundOption() {
 
 
 int scoringSystem(char nextword[], int totalupperconvert, int converted_lower_ok) {
+	//Game Scoring System
 
 	int nextword_length = strlen(nextword);
 	int i = 0;
@@ -217,31 +219,32 @@ int scoringSystem(char nextword[], int totalupperconvert, int converted_lower_ok
 	printf("\n\n\n");
 	if (converted_lower_ok == 1) {
 		if (totalupperconvert == 1) {
+			//If a uppercase letter has been converted by the game to lowercase
 
-			printf("\n  [!] The game has detected uppercase letter(s).\n");
-			sleep(1);
-			printf("\n\n  Luckily for you, the creators are kind\n and have converted it for you.\n");
-			sleep(1);
-			printf("\n  But as the saying goes, if you're good at\n something never do it for free. So there goes 50 points.\n");		
+			printf("\n  \xF0\x9F\x98\xB1  The game has detected uppercase letter(s).\n");
+			sleep(2);
+			printf("\n\n  Luckily for you, the creators are kind\n  and have converted it for you.\n");
+			sleep(2);
+			printf("\n  But as the saying goes, if you're good at\n  something never do it for free. So there goes 50 points.\n");		
 			sleep(3);
 
 		} else if (totalupperconvert == 2) {
 
-			printf("\n  [!] Once again! You have entered uppercase letter(s).\n");
-			sleep(1);
+			printf("\n  \xF0\x9F\x98\xB1  Once again! You have entered uppercase letter(s).\n");
+			sleep(2);
 			printf("\n  We did it for you again but this time it's at double the cost.\n");
 			sleep(3);
 
 		} else if (totalupperconvert == 3) {
 
-			printf("\n  [!] Really? Again? That's it!\n");
-			sleep(1);
+			printf("\n  \xF0\x9F\x98\x95  Really? Again? That's it!\n");
+			sleep(2);
 			printf("\n  Say goodbye to 200 points. That'll teach you a lesson.\n");
 			sleep(3);
 
 		} else if (totalupperconvert > 3) {
 
-			printf("\n  [!] ....\n");
+			printf("\n  \xF0\x9F\x98\x94  ....\n");
 			sleep(1);
 			printf("\n  We give up, say goodbye to 300 points. ");
 			sleep(2);
@@ -288,6 +291,7 @@ int scoringSystem(char nextword[], int totalupperconvert, int converted_lower_ok
 	sleep(2);
 
 	if (converted_lower_ok == 1) {
+		//Penalty for inputing uppercase word
 
 		switch(totalupperconvert) {
 			case 1:
@@ -316,6 +320,7 @@ int scoringSystem(char nextword[], int totalupperconvert, int converted_lower_ok
 
 
 int checkWordLength(char nextword[]) {
+	//Ensure the word length meets the minimum requirement
 
 	int nextword_length_ok = 0;
 	int nextword_length = strlen(nextword);
@@ -328,6 +333,7 @@ int checkWordLength(char nextword[]) {
 }
 
 int checkSpecialChar(char nextword[]) {
+	//Check for the presence of non-alphabet characters, including integers and special characters
 
 	int specialchar_not_ok = 0;
 	int i;
@@ -344,6 +350,7 @@ int checkSpecialChar(char nextword[]) {
 
 
 int checkUppercase(char nextword[]) {
+	//Check for the presence of uppercase characters
 
 	int uppercase_not_ok = 0;
 	int i;
@@ -360,6 +367,7 @@ int checkUppercase(char nextword[]) {
 
 
 int convertUppertoLower(char nextword[]){
+	//Convert uppercase characters to lowercase characters
 
 	//printf("\n [DEBUG] Converting uppercase to lowercase...");
 	int i;
@@ -378,6 +386,7 @@ int convertUppertoLower(char nextword[]){
 
 
 int checkEndingING(char nextword[]) {
+	//Check for the presence of '-ing'
 
 	int i;
 	int nextword_ing_ok = 0;
@@ -397,6 +406,7 @@ int checkEndingING(char nextword[]) {
 
 
 int matchFirstLastChar(char curword[], char nextword[]) {
+	//Check if the last character of the last word matches the first character of the first character
 
 	int nextword_firstlast_ok = 0;
 	char lastchar[2];
@@ -417,6 +427,7 @@ int matchFirstLastChar(char curword[], char nextword[]) {
 
 
 int checkWordList(Node * wordList, char * nextword) {
+	//Check if the new word has been used before in the current game session
 
 	int usedword_not_ok;
 	Node * list = wordList;
@@ -435,6 +446,7 @@ int checkWordList(Node * wordList, char * nextword) {
 
 
 int checkDictList(char nextword[1]) {
+	//Check if the word exists in the dictionary, 'wordlist.txt'
 
 	wordNode * target_list;
 
@@ -718,14 +730,14 @@ int main() {
 	char dummy;
 	int option;
 	int forcequit = 0;
-
+	
 	for (;;) {
 
 		do {
 
 			system("clear");
 			printf("\n |====================================|\n");
-			printf(" |  Welcome to The ChainyWords Game!  |\n");
+			printf(" |  Welcome to The ChainyWords\xE2\x84\xA2 Game! |\n");
 			printf(" |====================================|\n");
 			printf(" |          By Gerald & Zhao          |\n");
 			printf("\n               Main Menu\n\n");
@@ -750,7 +762,7 @@ int main() {
 			forcequit = 1;
 			break;
 			default:
-			printf("\n\n  Invalid choice. Please try again.\n");
+			printf("\n\n  \xE2\x83\xA0 Invalid choice. Please try again.\n");
 			sleep(2);
 		}
 
