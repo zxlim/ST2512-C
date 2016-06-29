@@ -602,8 +602,7 @@ int checkDictList(char nextword[1]) {
 
  					if (converted_lower_ok == 1) {
  						upperconverted = ++totalupperconvert[(round+1) % 2];
- 						//printf("\n [DEBUG] %d\n", upperconverted);
- 						sleep(2);
+ 						//printf("\n [DEBUG] %d\n", upperconverted); sleep(2);
  					}
 
  					roundScore = scoringSystem(nextword, upperconverted, converted_lower_ok);
