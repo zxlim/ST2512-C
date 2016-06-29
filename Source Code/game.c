@@ -151,6 +151,7 @@ void exitmenu() {
 }
 
 int roundOption() {
+	//Allows the players to choose how many rounds they want to play
 
 	char dummy;
 	int roundAmount;
@@ -207,6 +208,7 @@ int roundOption() {
 
 
 int scoringSystem(char nextword[], int totalupperconvert, int converted_lower_ok) {
+	//Game Scoring System
 
 	int nextword_length = strlen(nextword);
 	int i = 0;
@@ -217,6 +219,7 @@ int scoringSystem(char nextword[], int totalupperconvert, int converted_lower_ok
 	printf("\n\n\n");
 	if (converted_lower_ok == 1) {
 		if (totalupperconvert == 1) {
+			//If a uppercase letter has been converted by the game to lowercase
 
 			printf("\n  \xF0\x9F\x98\xB1  The game has detected uppercase letter(s).\n");
 			sleep(2);
@@ -288,6 +291,7 @@ int scoringSystem(char nextword[], int totalupperconvert, int converted_lower_ok
 	sleep(2);
 
 	if (converted_lower_ok == 1) {
+		//Penalty for inputing uppercase word
 
 		switch(totalupperconvert) {
 			case 1:
@@ -316,6 +320,7 @@ int scoringSystem(char nextword[], int totalupperconvert, int converted_lower_ok
 
 
 int checkWordLength(char nextword[]) {
+	//Ensure the word length meets the minimum requirement
 
 	int nextword_length_ok = 0;
 	int nextword_length = strlen(nextword);
@@ -328,6 +333,7 @@ int checkWordLength(char nextword[]) {
 }
 
 int checkSpecialChar(char nextword[]) {
+	//Check for the presence of non-alphabet characters, including integers and special characters
 
 	int specialchar_not_ok = 0;
 	int i;
@@ -344,6 +350,7 @@ int checkSpecialChar(char nextword[]) {
 
 
 int checkUppercase(char nextword[]) {
+	//Check for the presence of uppercase characters
 
 	int uppercase_not_ok = 0;
 	int i;
@@ -360,6 +367,7 @@ int checkUppercase(char nextword[]) {
 
 
 int convertUppertoLower(char nextword[]){
+	//Convert uppercase characters to lowercase characters
 
 	//printf("\n [DEBUG] Converting uppercase to lowercase...");
 	int i;
@@ -378,6 +386,7 @@ int convertUppertoLower(char nextword[]){
 
 
 int checkEndingING(char nextword[]) {
+	//Check for the presence of '-ing'
 
 	int i;
 	int nextword_ing_ok = 0;
@@ -397,6 +406,7 @@ int checkEndingING(char nextword[]) {
 
 
 int matchFirstLastChar(char curword[], char nextword[]) {
+	//Check if the last character of the last word matches the first character of the first character
 
 	int nextword_firstlast_ok = 0;
 	char lastchar[2];
@@ -417,6 +427,7 @@ int matchFirstLastChar(char curword[], char nextword[]) {
 
 
 int checkWordList(Node * wordList, char * nextword) {
+	//Check if the new word has been used before in the current game session
 
 	int usedword_not_ok;
 	Node * list = wordList;
@@ -435,6 +446,7 @@ int checkWordList(Node * wordList, char * nextword) {
 
 
 int checkDictList(char nextword[1]) {
+	//Check if the word exists in the dictionary, 'wordlist.txt'
 
 	wordNode * target_list;
 
