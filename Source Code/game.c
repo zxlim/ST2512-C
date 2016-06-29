@@ -61,11 +61,36 @@ void addNodeToList(Node* wordList, Node * newNode) {
 	tail -> nextNode = newNode;	 
 }
 
+void debugPrintWordList(Node * wordList) {
+	Node * list = wordList;
+
+	while (list != NULL) {
+		printf("\n [DEBUG] %s", list -> word);
+		list = list -> nextNode;
+	}
+
+}
+
 void freeWordList(Node* wordList) {
 
 	Node* list = wordList;
 	if (list == NULL) return;
 	freeWordList(list -> nextNode);
+}
+
+
+int clean_stdin() {
+
+	while (getchar() != '\n');
+
+	return 1;
+}
+
+int get_word_element(char nextword[]){
+	
+	int index = nextword[0] - 'a';
+
+	return index;
 }
 
 
@@ -110,44 +135,44 @@ void showhelpmenu() {
 	printf("       + Third time        (-200 points)\n");
 	printf("       + Subsequent times  (-300 points)\n");
 	printf("\n Press Enter to exit this help menu.\n ");
-	scanf("%c%c", &dummy, &dummy);
+	scanf("%c", &dummy);
 	system("clear");
 }
 
+void exitmenu() {
 
-void debugPrintWordList(Node * wordList) {
-	Node * list = wordList;
-
-	while (list != NULL) {
-		printf("\n [DEBUG] %s", list -> word);
-		list = list -> nextNode;
-	}
-
-}
-
-
-int get_word_element(char nextword[]){
-	
-	int index = nextword[0] - 'a';
-
-	return index;
+	system("clear");
+	printf("\n\n |============================================|\n");
+	printf(" |  Thanks for playing The ChainyWords Game!  |\n");
+	printf(" |============================================|\n");
+	printf("\n                Exiting game...\n\n");
+	sleep(2);
+	system("clear");
 }
 
 int roundOption() {
 
+	char dummy;
 	int roundAmount;
+	int roundchoice;
+	int choicecorrect = 0;
 
 	for (;;) {
 
-		int roundchoice = 0;
-		int choicecorrect = 0;
+		do {
+			system("clear");
+			printf("\n |====================================|\n");
+			printf(" |  Welcome to The ChainyWords Game!  |\n");
+			printf(" |====================================|\n");
+			printf("                 2/2\n");
+			printf("\n Number of Rounds\n");
+			printf("\n 1. 25 Rounds");
+			printf("\n 2. 60 Rounds");
+			printf("\n 3. Endless Mode");
+			printf("\n\n 4. Exit Game");
+			printf("\n\n Selection (1-4): ");
 
-		printf("\n            Number of rounds\n");
-		printf("\n             1. 25 rounds");
-		printf("\n             2. 60 rounds");
-		printf("\n             3. Endless");
-		printf("\n\n           Selection (1-3): ");
-		scanf("%d", &roundchoice);
+		} while ((scanf("%d%c", &roundchoice, &dummy) != 2 || dummy != '\n') && clean_stdin());
 
 		switch (roundchoice) {
 			case 1:
@@ -162,13 +187,19 @@ int roundOption() {
 			roundAmount = 0;
 			choicecorrect = 1;
 			break;
+			case 4:
+			roundAmount = -1;
+			choicecorrect = 1;
+			break;
 			default:
-			printf("\n    Invalid choice. Please try again.\n");
+			printf("\n Invalid choice. Please try again.\n");
+			sleep(2);
 		}
 
 		if (choicecorrect == 1) {
 			break;
 		}
+
 	}
 
 	return roundAmount;
@@ -187,34 +218,38 @@ int scoringSystem(char nextword[], int totalupperconvert, int converted_lower_ok
 	if (converted_lower_ok == 1) {
 		if (totalupperconvert == 1) {
 
-			printf("\n [!] The game has detected uppercase letter(s).");
-			printf("\n\n Luckily for you, the creators are kind\n and have converted it for you.\n");
+			printf("\n  [!] The game has detected uppercase letter(s).\n");
 			sleep(1);
-			printf("\n But as the saying goes, if you're good at\n something never do it for free. So there goes 50 points.\n");		
+			printf("\n\n  Luckily for you, the creators are kind\n and have converted it for you.\n");
+			sleep(1);
+			printf("\n  But as the saying goes, if you're good at\n something never do it for free. So there goes 50 points.\n");		
 			sleep(3);
 
 		} else if (totalupperconvert == 2) {
 
-			printf("\n [!] Once again! You have entered uppercase letter(s).\n");
-			printf("\n We did it for you again but this time it's at double the cost.\n");
+			printf("\n  [!] Once again! You have entered uppercase letter(s).\n");
+			sleep(1);
+			printf("\n  We did it for you again but this time it's at double the cost.\n");
 			sleep(3);
 
 		} else if (totalupperconvert == 3) {
 
-			printf("\n [!] Really? Again? That's it!\n");
-			printf("\n Say goodbye to 200 points. That'll teach you a lesson.\n");
+			printf("\n  [!] Really? Again? That's it!\n");
+			sleep(1);
+			printf("\n  Say goodbye to 200 points. That'll teach you a lesson.\n");
 			sleep(3);
 
 		} else if (totalupperconvert > 3) {
 
-			printf("\n [!] ....");
-			printf("\n We give up, say goodbye to 300 points. ");
+			printf("\n  [!] ....\n");
+			sleep(1);
+			printf("\n  We give up, say goodbye to 300 points. ");
 			sleep(2);
 
 		}
 	}
 
-	printf("\n\n Points distribution for word '%s':\n\n", nextword);
+	printf("\n\n  Points distribution for word '%s':\n\n", nextword);
 
 	for (i = 0; i < nextword_length; i++) {
 
@@ -245,7 +280,7 @@ int scoringSystem(char nextword[], int totalupperconvert, int converted_lower_ok
 		}
 	} //End of For loop
 
-	printf("\n\n Calculating score...\n");
+	printf("\n\n  Calculating score...\n");
 	sleep(2);
 
 
@@ -269,10 +304,10 @@ int scoringSystem(char nextword[], int totalupperconvert, int converted_lower_ok
 			break;
 		}
 
-		printf("\n Wait! Almost forgot the points you lost.");
-		printf("\n Calculating ACTUAL score...\n");
+		printf("\n  Wait! Almost forgot the points you lost.\n");
+		printf("\n  Calculating ACTUAL score...\n");
 		sleep(2);
-		printf("\n Final points: %d \n", roundPoints);
+		printf("\n  Final points: %d \n", roundPoints);
 		sleep(2);
 	} 
 
@@ -448,8 +483,10 @@ int checkDictList(char nextword[1]) {
  	int validword = 0;
  	int round = 1;
  	int totalupperconvert = 0;
+ 	int roundamount = 501;
  	int forcequit = 0;
  	int player_scores[2]= {0,0};
+ 	char dummy;
  	char pname[2][MAXNAME_LEN];
  	char curword[MAXWORD_LEN];
  	char nextword[MAXWORD_LEN];
@@ -462,11 +499,16 @@ int checkDictList(char nextword[1]) {
  	printf("\n |====================================|\n");
  	printf(" |  Welcome to The ChainyWords Game!  |\n");
  	printf(" |====================================|\n");
+ 	printf("                 1/2\n");
  	printf("\n Choose your names (Maximum 35 letters)\n");
  	strcpy(pname[0],prompt_name("\n Name of Player 1: ",pname[0]));
  	strcpy(pname[1],prompt_name(" Name of Player 2: ",pname[1]));
 
- 	int roundamount = roundOption();
+ 	roundamount = roundOption();
+
+ 	if (roundamount == -1) {
+ 		return;
+ 	}
 
  	printf("\n Initializing game session...\n");
 
@@ -494,7 +536,7 @@ int checkDictList(char nextword[1]) {
 
  			printf(" (Enter 'q' to quit the game or 'h' for the help menu)");
  			printf("\n %s, enter the next word: ", pname[(round+1)%2]);
- 			scanf("%s", nextword);
+ 			scanf("%s%c", nextword, &dummy);
 
  			if (strcmp(nextword,"q") == 0) {
  				char confirmQuit[] = "n";
@@ -641,7 +683,7 @@ int checkDictList(char nextword[1]) {
 }
 
 
-void optionone() {
+void loadgame() {
 
 	char again[1];
 
@@ -671,39 +713,32 @@ void optionone() {
 }
 
 
-void exitmenu() {
-
-	system("clear");
-	printf("\n\n |============================================|\n");
-	printf(" |  Thanks for playing The ChainyWords Game!  |\n");
-	printf(" |============================================|\n");
-	printf("\n                Exiting game...\n\n");
-	sleep(2);
-	system("clear");
-}
-
-
 int main() {
 
+	char dummy;
 	int option;
 	int forcequit = 0;
-	system("clear");
 
 	for (;;) {
-		printf("\n |====================================|\n");
-		printf(" |  Welcome to The ChainyWords Game!  |\n");
-		printf(" |====================================|\n");
-		printf(" |          By Gerald & Zhao          |\n");
-		printf("\n               Main Menu\n\n");
-		printf("\n             1. Play game");
-		printf("\n             2. Help menu");
-		printf("\n             3. Exit game\n\n");
-		printf("            Selection (1-3): ");
-		scanf("%d", &option);
+
+		do {
+
+			system("clear");
+			printf("\n |====================================|\n");
+			printf(" |  Welcome to The ChainyWords Game!  |\n");
+			printf(" |====================================|\n");
+			printf(" |          By Gerald & Zhao          |\n");
+			printf("\n               Main Menu\n\n");
+			printf("\n             1. Play game");
+			printf("\n             2. Help menu");
+			printf("\n             3. Exit game\n\n");
+			printf("            Selection (1-3): ");
+
+		} while ((scanf("%d%c", &option, &dummy) != 2 || dummy != '\n') && clean_stdin());
 
 		switch (option) {
 			case 1:
-			optionone();
+			loadgame();
 			exitmenu();
 			forcequit = 1;
 			break;
@@ -715,8 +750,8 @@ int main() {
 			forcequit = 1;
 			break;
 			default:
-			system("clear");
-			printf("\n  Invalid choice. Please try again.\n");
+			printf("\n\n  Invalid choice. Please try again.\n");
+			sleep(2);
 		}
 
 		if (forcequit == 1) {
