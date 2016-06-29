@@ -219,23 +219,23 @@ int scoringSystem(char nextword[], int totalupperconvert, int converted_lower_ok
 		if (totalupperconvert == 1) {
 
 			printf("\n  [!] The game has detected uppercase letter(s).\n");
-			sleep(1);
+			sleep(2);
 			printf("\n\n  Luckily for you, the creators are kind\n and have converted it for you.\n");
-			sleep(1);
+			sleep(2);
 			printf("\n  But as the saying goes, if you're good at\n something never do it for free. So there goes 50 points.\n");		
 			sleep(3);
 
 		} else if (totalupperconvert == 2) {
 
 			printf("\n  [!] Once again! You have entered uppercase letter(s).\n");
-			sleep(1);
+			sleep(2);
 			printf("\n  We did it for you again but this time it's at double the cost.\n");
 			sleep(3);
 
 		} else if (totalupperconvert == 3) {
 
 			printf("\n  [!] Really? Again? That's it!\n");
-			sleep(1);
+			sleep(2);
 			printf("\n  Say goodbye to 200 points. That'll teach you a lesson.\n");
 			sleep(3);
 
@@ -725,7 +725,7 @@ int main() {
 
 			system("clear");
 			printf("\n |====================================|\n");
-			printf(" |  Welcome to The ChainyWords Game!  |\n");
+			printf(" |  Welcome to The ChainyWords%c%c%c Game! |\n", '\xE2', '\x84', '\xA2');
 			printf(" |====================================|\n");
 			printf(" |          By Gerald & Zhao          |\n");
 			printf("\n               Main Menu\n\n");
