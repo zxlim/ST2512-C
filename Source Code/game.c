@@ -177,11 +177,11 @@ int roundOption() {
 
 		switch (roundchoice) {
 			case 1:
-			roundAmount = 26*2;
+			roundAmount = (25*2) + 1;
 			choicecorrect = 1;
 			break;
 			case 2:
-			roundAmount = 61*2;
+			roundAmount = (60*2) + 1;
 			choicecorrect = 1;
 			break;
 			case 3:
@@ -207,7 +207,7 @@ int roundOption() {
 }
 
 
-int scoringSystem(char nextword[], int totalupperconvert, int converted_lower_ok) {
+int scoringSystem(char nextword[], int upperconverted, int converted_lower_ok) {
 	//Game Scoring System
 
 	int nextword_length = strlen(nextword);
@@ -218,37 +218,38 @@ int scoringSystem(char nextword[], int totalupperconvert, int converted_lower_ok
 
 	printf("\n\n\n");
 	if (converted_lower_ok == 1) {
-		if (totalupperconvert == 1) {
-			//If a uppercase letter has been converted by the game to lowercase
+		//If a uppercase letter has been converted by the game to lowercase
+		switch (upperconverted) {
 
+			case 1:
 			printf("\n  \xF0\x9F\x98\xB1  The game has detected uppercase letter(s).\n");
 			sleep(2);
 			printf("\n\n  Luckily for you, the creators are kind\n  and have converted it for you.\n");
 			sleep(2);
 			printf("\n  But as the saying goes, if you're good at\n  something never do it for free. So there goes 50 points.\n");		
 			sleep(3);
+			break;
 
-		} else if (totalupperconvert == 2) {
-
+			case 2:
 			printf("\n  \xF0\x9F\x98\xB1  Once again! You have entered uppercase letter(s).\n");
 			sleep(2);
 			printf("\n  We did it for you again but this time it's at double the cost.\n");
 			sleep(3);
+			break;
 
-		} else if (totalupperconvert == 3) {
-
+			case 3:
 			printf("\n  \xF0\x9F\x98\x95  Really? Again? That's it!\n");
 			sleep(2);
 			printf("\n  Say goodbye to 200 points. That'll teach you a lesson.\n");
 			sleep(3);
+			break;
 
-		} else if (totalupperconvert > 3) {
-
+			default:
 			printf("\n  \xF0\x9F\x98\x94  ....\n");
 			sleep(1);
 			printf("\n  We give up, say goodbye to 300 points. ");
 			sleep(2);
-
+			break;
 		}
 	}
 
@@ -292,17 +293,20 @@ int scoringSystem(char nextword[], int totalupperconvert, int converted_lower_ok
 
 	if (converted_lower_ok == 1) {
 		//Penalty for inputing uppercase word
+		switch(upperconverted) {
 
-		switch(totalupperconvert) {
 			case 1:
 			roundPoints -= 50;
 			break;
+
 			case 2:
 			roundPoints -= 100;
 			break;
+
 			case 3:
 			roundPoints -= 200;
 			break;
+
 			default:
 			roundPoints -= 300;
 			break;
@@ -494,7 +498,7 @@ int checkDictList(char nextword[1]) {
  	int roundScore;
  	int validword = 0;
  	int round = 1;
- 	int totalupperconvert = 0;
+ 	int totalupperconvert[2] = {0,0};
  	int roundamount = 501;
  	int forcequit = 0;
  	int player_scores[2]= {0,0};
@@ -530,6 +534,7 @@ int checkDictList(char nextword[1]) {
  	for (;round != roundamount;) {
 
  		int invalidcount = 3;
+ 		int upperconverted = totalupperconvert[(round+1) % 2];
 
  		//debugPrintWordList(wordList);
 
@@ -596,10 +601,11 @@ int checkDictList(char nextword[1]) {
  				if ((nextword_length_ok == 1) && (specialchar_not_ok == 0) && (uppercase_not_ok == 0 || converted_lower_ok == 1) && (nextword_ing_ok == 1) && (nextword_firstlast_ok == 1) && (usedword_not_ok == 0) && (nextword_indict_ok == 1)){
 
  					if (converted_lower_ok == 1) {
- 						totalupperconvert++;
+ 						upperconverted = ++totalupperconvert[(round+1) % 2];
+ 						//printf("\n [DEBUG] %d\n", upperconverted); sleep(2);
  					}
 
- 					roundScore = scoringSystem(nextword, totalupperconvert, converted_lower_ok);
+ 					roundScore = scoringSystem(nextword, upperconverted, converted_lower_ok);
  					player_scores[(round+1) % 2] += roundScore;
 
  					addNodeToList(wordList, createNode(nextword));
@@ -669,8 +675,8 @@ int checkDictList(char nextword[1]) {
 	sleep(2);
 	system("clear");
 
-	printf("\n Final score at round %4d:\n",(round+1)/2);
-	printf(" %s's Score:   %3d\n %s's Score:   %3d\n\n",pname[0],player_scores[0],pname[1],player_scores[1]);
+	printf("\n\n Final score at round %4d:\n",(round+1)/2);
+	printf("\n %s's Score:   %3d\n %s's Score:   %3d\n\n",pname[0],player_scores[0],pname[1],player_scores[1]);
 
 	if (player_scores[0] > player_scores[1]) {
 		printf("\n |====================================|\n");
